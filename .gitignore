@@ -1,2 +1,3 @@
 *.sh
 .bash_local_aliases
+node_modules/
