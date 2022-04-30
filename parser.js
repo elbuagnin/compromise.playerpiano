@@ -1,5 +1,5 @@
 import * as mfs from "./lib/filesystem.js";
-import disambiguate from "./disambiguate.js";
+import compare from "./compare.js";
 import tagger from "./tagger.js";
 import process from "./processor.js";
 
@@ -91,10 +91,10 @@ function parseByPattern(doc, action, parsingData) {
   let matches = [];
 
   switch (action) {
-    case "disambiguate":
+    case "compare":
       matches = doc.match(parsingData.pattern);
       matches.forEach((match) => {
-        disambiguate(doc, { word: match, POSes: parsingData.POSes }, match);
+        compare(doc, { word: match, POSes: parsingData.POSes }, match);
       });
       break;
     case "tag":
@@ -111,7 +111,7 @@ function parseByTerm(doc, action, parsingData) {
   doc.terms().forEach((entry) => {
     const root = entry.text("root");
     if (root === term.word) {
-      disambiguate(doc, term, entry);
+      compare(doc, term, entry);
     }
   });
 }

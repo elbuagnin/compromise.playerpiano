@@ -1,14 +1,14 @@
 export default function tagger(doc, payload) {
-  const { pattern, term, tag, untag, disambiguate } = payload;
+  const { pattern, term, tag, untag, compare } = payload;
 
   if (doc.has(pattern)) {
     const matchedTerm = doc.match(pattern).match(term);
 
     if (
-      (disambiguate === true && !matchedTerm.has("#Resolved")) ||
-      disambiguate !== true
+      (compare === true && !matchedTerm.has("#Resolved")) ||
+      compare !== true
     ) {
-      if (disambiguate === true) {
+      if (compare === true) {
         const oldTags = Object.values(matchedTerm.out("tags")[0])[0];
         matchedTerm.unTag(oldTags);
         matchedTerm.tag("Resolved");

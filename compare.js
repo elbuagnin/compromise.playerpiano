@@ -1,7 +1,7 @@
 import posNameNormalize from "./pos-name-table.js";
 import posTests from "./pos-tests.js";
 
-export default function disambiguate(doc, term, match) {
+export default function compare(doc, term, match) {
   function compromiseTagged(pos) {
     return "#" + pos.charAt(0).toUpperCase() + pos.slice(1);
   }
@@ -203,15 +203,15 @@ export default function disambiguate(doc, term, match) {
     if (winner.length > 1) {
       return;
     } else {
-      const disambiguatedPOS = compromiseTagged(winner[0]);
+      const comparedPOS = compromiseTagged(winner[0]);
 
-      if (match.has(disambiguatedPOS)) {
+      if (match.has(comparedPOS)) {
         match.tag("Resolved");
 
         return;
       } else {
         clearOldTags(match);
-        match.tag(disambiguatedPOS);
+        match.tag(comparedPOS);
         match.tag("Resolved");
         // console\.log.*
         // console\.log.*
