@@ -1,7 +1,7 @@
 import initialize from "./initialize.js";
 import sequencer from "./sequencer.js";
 
-export const pianoplayerPlugin = {
+const pianoplayerPlugin = {
   api: View => {
     View.prototype.sequence = function() {
       initialize(this);
@@ -10,3 +10,5 @@ export const pianoplayerPlugin = {
     };
   }
 };
+
+export default pianoplayerPlugin;
