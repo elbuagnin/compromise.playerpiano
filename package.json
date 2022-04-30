@@ -3,6 +3,7 @@
   "version": "1.0.0-beta1",
   "description": "A sequencer to automate parsing text using the NLP module, Compromise.",
   "main": "index.js",
+  "type": "module",
   "directories": {
     "lib": "lib"
   },

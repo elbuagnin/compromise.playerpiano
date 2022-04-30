@@ -1,3 +1,6 @@
 *.sh
 .bash_local_aliases
 node_modules/
+data/
+app.js
+sample.txt
