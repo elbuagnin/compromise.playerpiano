@@ -1,4 +1,4 @@
-import * as extend from "./compromise-extensions.js";
+import * as extend from "./lib/compromise-extensions.js";
 import * as mfs from "./lib/filesystem.js";
 
 export default function initialize() {
