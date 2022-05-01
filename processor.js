@@ -53,7 +53,9 @@ export default function process(doc, parsingData) {
       tagDashGroups(doc);
       break;
     case "expandContractions":
-      import(path.join(dirs.processors, "expand-contractions.js"));
+      const expandContractions = import(
+        path.join(dirs.processors, "expand-contractions.js")
+      );
       expandContractions(doc);
       break;
     case "compoundNouns":
