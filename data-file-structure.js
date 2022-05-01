@@ -1,4 +1,4 @@
-const baseDataPath = "/sequencing-data/";
+const baseDataPath = "./sequencing-data/";
 const classifiersPath = baseDataPath.join("classifiers");
 const classifierKeysPath = classifiersPath.join("classification-keys");
 const classifierByTermsPath = classifiersPath.join("classifications-by-terms");
