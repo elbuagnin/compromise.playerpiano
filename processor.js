@@ -1,3 +1,5 @@
+import path from "path";
+import * as dirs from "./data-file-structure.js";
 import * as helpers from "./lib/word-helpers.js";
 
 export default function process(doc, parsingData) {
@@ -15,10 +17,10 @@ export default function process(doc, parsingData) {
         const docBTags = docB.termList()[i].tags;
 
         if (Object.keys(docATags).length === Object.keys(docBTags).length) {
-          Object.keys(docATags).forEach((docATag) => {
+          Object.keys(docATags).forEach(docATag => {
             tagCount++;
 
-            Object.keys(docBTags).forEach((docBTag) => {
+            Object.keys(docBTags).forEach(docBTag => {
               if (docATag === docBTag) {
                 n++;
               }
@@ -51,6 +53,7 @@ export default function process(doc, parsingData) {
       tagDashGroups(doc);
       break;
     case "expandContractions":
+      import(path.join(dirs.processors, "expand-contractions.js"));
       expandContractions(doc);
       break;
     case "compoundNouns":
@@ -81,14 +84,13 @@ export default function process(doc, parsingData) {
   const after = doc.clone();
   if (equivalentDocs(before, after) === false) {
     // console\.log.*
-
   }
 }
 
 function tagDashGroups(doc) {
   if (doc.has("@hasDash")) {
     const sentences = doc.sentences();
-    sentences.forEach((sentence) => {
+    sentences.forEach(sentence => {
       const dashedWords = sentence.match("@hasDash");
       const totalDashes = dashedWords.length;
 
@@ -112,16 +114,16 @@ function tagDashGroups(doc) {
   }
 }
 
-function expandContractions(doc) {
-  doc.contractions().expand();
-}
+// function expandContractions(doc) {
+//   doc.contractions().expand();
+// }
 
 function compoundNouns(doc) {
   const backToBackNouns = doc.match(
     "(#Noun && !#Pronoun) (#Noun && !#Pronoun)"
   );
 
-  backToBackNouns.forEach((pair) => {
+  backToBackNouns.forEach(pair => {
     let test = true;
     const first = pair.match("^.").clone();
     const last = pair.match(".$").clone();
@@ -158,7 +160,7 @@ function ingVerbals(doc) {
 
       function vowelPattern(string) {
         let pattern = "";
-        Object.values(string).forEach((character) => {
+        Object.values(string).forEach(character => {
           if (isVowel(character) === true) {
             pattern += "v";
           } else {
@@ -258,7 +260,7 @@ function ingVerbals(doc) {
   }
 
   const INGs = doc.match("/ing$/");
-  INGs.forEach((word) => {
+  INGs.forEach(word => {
     if (isINGVerbal(word) === true) {
       word.tag("#ProgressiveVerbal");
     }
@@ -268,13 +270,13 @@ function ingVerbals(doc) {
 function lists(doc) {
   if (doc.has("#Comma") && doc.has("#CoordinatingConjunction")) {
     const sentences = doc.sentences();
-    sentences.forEach((sentence) => {
+    sentences.forEach(sentence => {
       if (sentence.has("#Comma") && sentence.has("#CoordinatingConjunction")) {
         // console\.log.*
         const coordinatingConjunctions = sentence.match(
           "#CoordinatingConjunction"
         );
-        coordinatingConjunctions.forEach((conjunction) => {
+        coordinatingConjunctions.forEach(conjunction => {
           // console\.log.*
           const list = [];
           const penultimateWord = conjunction.lookBehind(".").last();
@@ -291,7 +293,7 @@ function lists(doc) {
           // console\.log.*
 
           if (list.length > 2) {
-            list.forEach((word) => {
+            list.forEach(word => {
               word.tag("#ListItem");
             });
           }
@@ -310,10 +312,19 @@ function tagParentheses(doc) {
 }
 
 function tagPunctuation(doc) {
-  doc.sentences().forEach((sentence) => {
-    sentence.if("@hasPeriod").lastTerms().tag("Period");
-    sentence.if("@hasQuestionMark").lastTerms().tag("QuestionMark");
-    sentence.if("@hasExclamation").lastTerms().tag("ExclamationMark");
+  doc.sentences().forEach(sentence => {
+    sentence
+      .if("@hasPeriod")
+      .lastTerms()
+      .tag("Period");
+    sentence
+      .if("@hasQuestionMark")
+      .lastTerms()
+      .tag("QuestionMark");
+    sentence
+      .if("@hasExclamation")
+      .lastTerms()
+      .tag("ExclamationMark");
 
     sentence.match("@hasComma").tag("Comma");
     sentence.match("@hasSemicolon").tag("Semicolon");
