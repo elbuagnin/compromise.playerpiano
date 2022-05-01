@@ -1,5 +1,5 @@
-import posNameNormalize from "./pos-name-table.js";
-import posTests from "./pos-tests.js";
+import classifications from "./classifications-key.js";
+import classifyByPatternTests from "./classifier-patterns.js";
 
 export default function compare(doc, term, match) {
   function compromiseTagged(pos) {
@@ -17,12 +17,12 @@ export default function compare(doc, term, match) {
       "OpenParentheses",
       "CloseParentheses",
       "OpenQuote",
-      "CloseQuote",
+      "CloseQuote"
     ];
 
     const oldTags = Object.values(docWord.out("tags")[0])[0];
 
-    const filteredTags = oldTags.filter((tag) => {
+    const filteredTags = oldTags.filter(tag => {
       if (!tagExceptions.includes(tag)) {
         return tag;
       }
@@ -31,7 +31,7 @@ export default function compare(doc, term, match) {
     docWord.unTag(filteredTags);
   }
 
-  function isPOS(word, pos, match) {
+  function isClassification(word, pos, match) {
     function testing(tests, match) {
       function findChunk(scope) {
         if (scope === "phrase") {
@@ -73,7 +73,7 @@ export default function compare(doc, term, match) {
         return count;
       }
 
-      tests.forEach((test) => {
+      tests.forEach(test => {
         let chunk = findChunk(test.scope);
 
         let frontPattern = test.pattern.substring(
@@ -143,10 +143,10 @@ export default function compare(doc, term, match) {
 
     let result = 0;
     const testTypes = ["negative", "improbable", "probable", "positive"];
-    const testSet = posTests.filter((test) => test.pos === pos);
+    const testSet = classifyByPatternTests.filter(test => test.pos === pos);
 
-    testTypes.forEach((type) => {
-      const tests = testSet.filter((test) => test.type === type);
+    testTypes.forEach(type => {
+      const tests = testSet.filter(test => test.type === type);
       testing(tests, match);
     });
 
@@ -187,15 +187,15 @@ export default function compare(doc, term, match) {
   const word = term.word;
   // console\.log.*
   if (!match.has("#Resolved")) {
-    const POSes = term.POSes.map((pos) => posNameNormalize(pos));
+    const POSes = term.POSes.map(pos => classifications(pos));
 
     const results = {};
-    Object.values(POSes).forEach((pos) => {
+    Object.values(POSes).forEach(pos => {
       results[pos] = 0;
     });
 
-    Object.values(POSes).forEach((pos) => {
-      results[pos] = isPOS(word, pos, match);
+    Object.values(POSes).forEach(pos => {
+      results[pos] = isClassification(word, pos, match);
     });
     // console\.log.*
     const winner = compareResults(results);
