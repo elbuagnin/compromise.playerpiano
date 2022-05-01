@@ -1,7 +1,7 @@
 import * as mfs from "./lib/filesystem.js";
 import * as dirs from "./data-file-structure.js";
 import path from "path";
-import compare from "./compare.js";
+import disambiguate from "./disambiguate.js";
 import tagger from "./tagger.js";
 import process from "./processor.js";
 
@@ -91,10 +91,10 @@ function parseByPattern(doc, action, parsingData) {
   let matches = [];
 
   switch (action) {
-    case "compare":
+    case "disambiguate":
       matches = doc.match(parsingData.pattern);
       matches.forEach(match => {
-        compare(doc, { word: match, POSes: parsingData.POSes }, match);
+        disambiguate(doc, { word: match, POSes: parsingData.POSes }, match);
       });
       break;
     case "tag":
@@ -111,7 +111,7 @@ function parseByTerm(doc, action, parsingData) {
   doc.terms().forEach(entry => {
     const root = entry.text("root");
     if (root === term.word) {
-      compare(doc, term, entry);
+      disambiguate(doc, term, entry);
     }
   });
 }

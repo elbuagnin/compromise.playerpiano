@@ -1,7 +1,7 @@
 import classifications from "./classifications-key.js";
 import classifyByPatternTests from "./classifier-patterns.js";
 
-export default function compare(doc, term, match) {
+export default function disambiguate(doc, term, match) {
   function compromiseTagged(tag) {
     return "#" + tag.charAt(0).toUpperCase() + tag.slice(1);
   }
@@ -155,7 +155,7 @@ export default function compare(doc, term, match) {
     return result;
   }
 
-  function compareResults(results) {
+  function disambiguateResults(results) {
     const ties = [];
     const winner = Object.keys(results).reduce((previous, current) => {
       const diff = results[current] - results[previous];
@@ -200,20 +200,20 @@ export default function compare(doc, term, match) {
       results[pos] = isClassification(word, pos, match);
     });
     // console\.log.*
-    const winner = compareResults(results);
+    const winner = disambiguateResults(results);
 
     if (winner.length > 1) {
       return;
     } else {
-      const comparedPOS = compromiseTagged(winner[0]);
+      const disambiguatedPOS = compromiseTagged(winner[0]);
 
-      if (match.has(comparedPOS)) {
+      if (match.has(disambiguatedPOS)) {
         match.tag("Resolved");
 
         return;
       } else {
         clearOldTags(match);
-        match.tag(comparedPOS);
+        match.tag(disambiguatedPOS);
         match.tag("Resolved");
         // console\.log.*
         // console\.log.*
