@@ -1,7 +1,7 @@
 import * as mfs from "./lib/filesystem.js";
-import "./data-file-structure.js";
+import * as dirs from "./data-file-structure.js";
 
-const compareTerms = mfs.loadJSONDir(classifierByTermsPath, true);
+const compareTerms = mfs.loadJSONDir(classifierByTerms, true);
 
 export default function filterTerms(list) {
   const filteredTerms = compareTerms.filter(term => term.list === list);

@@ -1,5 +1,6 @@
 import * as mfs from "./lib/filesystem.js";
-import "./data-file-structure.js";
+import * as dirs from "./data-file-structure.js";
+import path from "path";
 import sequence from "./sequence.js";
 import parse from "./parser.js";
 
@@ -38,7 +39,7 @@ export default function sequencer(document) {
   }
 
   function subSequencer(file) {
-    const filepath = subSequencesPath.join(file + ".json");
+    const filepath = path.join(subSequences, file + ".json");
 
     const returnType = "array";
     const subSequence = mfs.loadJSONFile(filepath, returnType);

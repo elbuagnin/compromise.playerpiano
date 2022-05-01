@@ -1,5 +1,6 @@
 import * as mfs from "./lib/filesystem.js";
-import "./data-file-structure.js";
+import * as dirs from "./data-file-structure.js";
+import path from "path";
 import compare from "./compare.js";
 import tagger from "./tagger.js";
 import process from "./processor.js";
@@ -7,11 +8,11 @@ import process from "./processor.js";
 function parsingDataPaths(parseBy) {
   switch (parseBy) {
     case "pattern":
-      return tagPatternsPath;
+      return tagPatterns;
     case "term":
-      return classifierByTermsPath;
+      return classifierByTerms;
     case "process":
-      return processorsPath;
+      return processors;
     default:
       break;
   }
@@ -60,7 +61,7 @@ function parseUsingFile(doc, instruction) {
   const { parseBy } = instruction;
   const { file } = instruction.payload;
 
-  const filepath = parsingDataPaths(parseBy).join(file + ".json");
+  const filepath = path.join(parsingDataPaths(parseBy), file + ".json");
 
   const returnType = "array";
   const parsingSets = mfs.loadJSONFile(filepath, returnType);
@@ -75,7 +76,7 @@ function parseUsingDirectory(doc, instruction) {
   const { parseBy } = instruction;
   const { directory } = instruction.payload;
 
-  const dirpath = parsingDataPaths(parseBy).join(directory);
+  const dirpath = path.join(parsingDataPaths(parseBy), directory);
 
   const list = true;
   const parsingSets = mfs.loadJSONDir(dirpath, list);

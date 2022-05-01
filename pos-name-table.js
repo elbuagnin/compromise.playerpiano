@@ -1,7 +1,8 @@
 import * as mfs from "./lib/filesystem.js";
-import "./data-file-structure.js";
+import * as dirs from "./data-file-structure.js";
+import path from "path";
 
-const posNameTableFile = classifierKeysPath.join("pos-name-table.json");
+const posNameTableFile = path.join(classifierKeys, "pos-name-table.json");
 const posNameTable = mfs.loadJSONFile(posNameTableFile, "array");
 
 export default function posNameNormalize(posNameFromData) {
