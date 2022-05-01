@@ -2,8 +2,8 @@ import classifications from "./classifications-key.js";
 import classifyByPatternTests from "./classifier-patterns.js";
 
 export default function compare(doc, term, match) {
-  function compromiseTagged(pos) {
-    return "#" + pos.charAt(0).toUpperCase() + pos.slice(1);
+  function compromiseTagged(tag) {
+    return "#" + tag.charAt(0).toUpperCase() + tag.slice(1);
   }
 
   function clearOldTags(docWord) {
@@ -31,7 +31,7 @@ export default function compare(doc, term, match) {
     docWord.unTag(filteredTags);
   }
 
-  function isClassification(word, pos, match) {
+  function isClassification(word, classification, match) {
     function testing(tests, match) {
       function findChunk(scope) {
         if (scope === "phrase") {
@@ -143,7 +143,9 @@ export default function compare(doc, term, match) {
 
     let result = 0;
     const testTypes = ["negative", "improbable", "probable", "positive"];
-    const testSet = classifyByPatternTests.filter(test => test.pos === pos);
+    const testSet = classifyByPatternTests.filter(
+      test => test.pos === classification
+    );
 
     testTypes.forEach(type => {
       const tests = testSet.filter(test => test.type === type);
