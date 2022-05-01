@@ -1,6 +1,6 @@
 import path from "path";
 
-const baseData = "./sequencing-data/";
+const baseData = "/sequencing-data/";
 const classifiers = path.join(baseData, "classifiers");
 const classifierKeys = path.join(classifiers, "classification-keys");
 const classifierByTerms = path.join(classifiers, "classifications-by-terms");
