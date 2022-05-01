@@ -1,6 +1,6 @@
 import * as extend from "./lib/compromise-extensions.js";
 import * as mfs from "./lib/filesystem.js";
-import "./data-file-structure";
+import "./data-file-structure.js";
 
 export default function initialize() {
   const tags = mfs.loadJSONDir(tagsPath, "tags");

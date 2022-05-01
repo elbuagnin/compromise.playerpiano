@@ -1,5 +1,5 @@
 import * as mfs from "./lib/filesystem.js";
-import "./data-file-structure";
+import "./data-file-structure.js";
 
 const posNameTableFile = classifierKeysPath.join("pos-name-table.json");
 const posNameTable = mfs.loadJSONFile(posNameTableFile, "array");

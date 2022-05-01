@@ -1,5 +1,5 @@
 import * as mfs from "./lib/filesystem.js";
-import "./data-file-structure";
+import "./data-file-structure.js";
 import compare from "./compare.js";
 import tagger from "./tagger.js";
 import process from "./processor.js";

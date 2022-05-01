@@ -1,5 +1,5 @@
 import * as mfs from "./lib/filesystem.js";
-import "./data-file-structure";
+import "./data-file-structure.js";
 
 const compareTerms = mfs.loadJSONDir(classifierByTermsPath, true);
 
