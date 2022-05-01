@@ -1,6 +1,7 @@
 import * as mfs from "./lib/filesystem.js";
+import "./data-file-structure";
 
-const posNameTableFile = "/data/general/pos-name-table.json";
+const posNameTableFile = classifierKeysPath.join("pos-name-table.json");
 const posNameTable = mfs.loadJSONFile(posNameTableFile, "array");
 
 export default function posNameNormalize(posNameFromData) {
@@ -8,7 +9,7 @@ export default function posNameNormalize(posNameFromData) {
     posNameFromData[0].toLowerCase() + posNameFromData.slice(1);
   let normalizedName = false;
 
-  Object.values(posNameTable).forEach((pos) => {
+  Object.values(posNameTable).forEach(pos => {
     if (pos.abbreviation === dropCapitalPosNameFromData) {
       normalizedName = pos.fullname;
     } else if (pos.fullname === dropCapitalPosNameFromData) {

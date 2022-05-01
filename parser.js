@@ -1,18 +1,17 @@
 import * as mfs from "./lib/filesystem.js";
+import "./data-file-structure";
 import compare from "./compare.js";
 import tagger from "./tagger.js";
 import process from "./processor.js";
 
 function parsingDataPaths(parseBy) {
-  const baseDir = "/data/";
-
   switch (parseBy) {
     case "pattern":
-      return baseDir + "patterns/";
+      return tagPatternsPath;
     case "term":
-      return baseDir + "terms/";
+      return classifierByTermsPath;
     case "process":
-      return baseDir + "processes/";
+      return processorsPath;
     default:
       break;
   }
@@ -61,13 +60,13 @@ function parseUsingFile(doc, instruction) {
   const { parseBy } = instruction;
   const { file } = instruction.payload;
 
-  const filepath = parsingDataPaths(parseBy) + file + ".json";
+  const filepath = parsingDataPaths(parseBy).join(file + ".json");
 
   const returnType = "array";
   const parsingSets = mfs.loadJSONFile(filepath, returnType);
   parsingSets.sort((a, b) => a.order - b.order);
 
-  parsingSets.forEach((parsingData) => {
+  parsingSets.forEach(parsingData => {
     parseByMethod(doc, instruction, parsingData);
   });
 }
@@ -76,13 +75,13 @@ function parseUsingDirectory(doc, instruction) {
   const { parseBy } = instruction;
   const { directory } = instruction.payload;
 
-  const dirpath = parsingDataPaths(parseBy) + directory;
+  const dirpath = parsingDataPaths(parseBy).join(directory);
 
   const list = true;
   const parsingSets = mfs.loadJSONDir(dirpath, list);
   parsingSets.sort((a, b) => a.batch - b.batch || a.order - b.order);
 
-  parsingSets.forEach((parsingData) => {
+  parsingSets.forEach(parsingData => {
     parseByMethod(doc, instruction, parsingData);
   });
 }
@@ -93,7 +92,7 @@ function parseByPattern(doc, action, parsingData) {
   switch (action) {
     case "compare":
       matches = doc.match(parsingData.pattern);
-      matches.forEach((match) => {
+      matches.forEach(match => {
         compare(doc, { word: match, POSes: parsingData.POSes }, match);
       });
       break;
@@ -108,7 +107,7 @@ function parseByPattern(doc, action, parsingData) {
 function parseByTerm(doc, action, parsingData) {
   //
   const { term } = parsingData;
-  doc.terms().forEach((entry) => {
+  doc.terms().forEach(entry => {
     const root = entry.text("root");
     if (root === term.word) {
       compare(doc, term, entry);

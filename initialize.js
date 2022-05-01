@@ -1,13 +1,10 @@
 import * as extend from "./lib/compromise-extensions.js";
 import * as mfs from "./lib/filesystem.js";
+import "./data-file-structure";
 
 export default function initialize() {
-  const dataDir = "/data/initialize/";
-  const tagDir = `${dataDir}tags/`;
-  const wordDir = `${dataDir}words/`;
-
-  const tags = mfs.loadJSONDir(tagDir, "tags");
-  const words = mfs.loadJSONDir(wordDir, "words");
+  const tags = mfs.loadJSONDir(tagsPath, "tags");
+  const words = mfs.loadJSONDir(wordsPath, "words");
 
   extend.addCustomTags(tags);
   extend.addCustomWords(words);

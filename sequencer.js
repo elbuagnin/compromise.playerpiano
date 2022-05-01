@@ -1,4 +1,5 @@
 import * as mfs from "./lib/filesystem.js";
+import "./data-file-structure";
 import sequence from "./sequence.js";
 import parse from "./parser.js";
 
@@ -11,7 +12,7 @@ export default function sequencer(document) {
     if (scope === "document") {
       parse(document, instruction);
     } else {
-      sentences.forEach((sentence) => {
+      sentences.forEach(sentence => {
         if (scope === "sentence") {
           parse(sentence, instruction);
         } else {
@@ -19,7 +20,7 @@ export default function sequencer(document) {
           let chunks = sentence;
           if (sentence.has("#PhraseBreak")) {
             const phraseBreaks = sentence.match("#PhraseBreak");
-            phraseBreaks.forEach((phraseBreak) => {
+            phraseBreaks.forEach(phraseBreak => {
               if (
                 phraseBreak.ifNo("(#ListItem|#CoordinatingAdjectives)").found
               ) {
@@ -28,7 +29,7 @@ export default function sequencer(document) {
             });
           }
 
-          chunks.forEach((chunk) => {
+          chunks.forEach(chunk => {
             parse(chunk, instruction);
           });
         }
@@ -37,13 +38,13 @@ export default function sequencer(document) {
   }
 
   function subSequencer(file) {
-    const filepath = "/data/sub-sequences/" + file + ".json";
+    const filepath = subSequencesPath.join(file + ".json");
 
     const returnType = "array";
     const subSequence = mfs.loadJSONFile(filepath, returnType);
     subSequence.sort((a, b) => a.order - b.order);
 
-    subSequence.forEach((subInstruction) => {
+    subSequence.forEach(subInstruction => {
       execute(subInstruction);
     });
   }
@@ -53,7 +54,7 @@ export default function sequencer(document) {
   const sentences = document.sentences();
   sequence.sort((a, b) => a.order - b.order);
 
-  sequence.forEach((instruction) => {
+  sequence.forEach(instruction => {
     if (instruction.action === "sub-sequence") {
       subSequencer(instruction.payload.file);
     } else {
