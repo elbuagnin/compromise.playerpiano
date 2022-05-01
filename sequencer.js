@@ -39,7 +39,7 @@ export default function sequencer(document) {
   }
 
   function subSequencer(file) {
-    const filepath = path.join(subSequences, file + ".json");
+    const filepath = path.join(dirs.subSequences, file + ".json");
 
     const returnType = "array";
     const subSequence = mfs.loadJSONFile(filepath, returnType);

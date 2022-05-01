@@ -8,11 +8,11 @@ import process from "./processor.js";
 function parsingDataPaths(parseBy) {
   switch (parseBy) {
     case "pattern":
-      return tagPatterns;
+      return dirs.tagPatterns;
     case "term":
-      return classifierByTerms;
+      return dirs.classifierByTerms;
     case "process":
-      return processors;
+      return dirs.processors;
     default:
       break;
   }
