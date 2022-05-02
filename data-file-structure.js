@@ -7,10 +7,7 @@ const relativePath = path.relative(import.meta.url, baseData);
 console.log('rel path: ' + relativePath);
 const resolvedPath = path.normalize(relativePath);
 console.log('resolved: ' + resolvedPath);
-//
-// const parentBase = resolvedPath.toString().substring(0, resolvedPath.length -5);
-//
-// console.log('pb: ' + parentBase);
+const parentBase = resolvedPath;
 
 const classifiers = path.join(baseData, "classifiers");
 const classifierKeys = path.join(classifiers, "classification-keys");
