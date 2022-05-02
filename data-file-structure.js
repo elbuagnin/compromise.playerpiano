@@ -1,15 +1,17 @@
 import path from "path";
 import fs from 'fs';
 
-const relativePath = '\\..\\..\\' + import.meta.url;
+const baseData = "/sequencing-data/";
+
+const relativePath = path.relative(import.meta.url, baseData);
 console.log('rel path: ' + relativePath);
 const resolvedPath = path.normalize(relativePath);
-// console.log('resolved: ' + resolvedPath);
+console.log('resolved: ' + resolvedPath);
 //
 // const parentBase = resolvedPath.toString().substring(0, resolvedPath.length -5);
 //
 // console.log('pb: ' + parentBase);
-const baseData = "/sequencing-data/";
+
 const classifiers = path.join(baseData, "classifiers");
 const classifierKeys = path.join(classifiers, "classification-keys");
 const classifierByTerms = path.join(classifiers, "classifications-by-terms");
