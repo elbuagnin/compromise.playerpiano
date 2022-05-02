@@ -4,11 +4,11 @@ import fs from 'fs';
 const relativePath = import.meta.url + "\\..\\..";
 console.log('rel path: ' + relativePath);
 const resolvedPath = fs.realpathSync(relativePath);
-console.log('resolved: ' + resolvedPath);
-
-const parentBase = resolvedPath.toString().substring(0, resolvedPath.length -5);
-
-console.log('pb: ' + parentBase);
+// console.log('resolved: ' + resolvedPath);
+//
+// const parentBase = resolvedPath.toString().substring(0, resolvedPath.length -5);
+//
+// console.log('pb: ' + parentBase);
 const baseData = "/sequencing-data/";
 const classifiers = path.join(baseData, "classifiers");
 const classifierKeys = path.join(classifiers, "classification-keys");
