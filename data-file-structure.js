@@ -1,4 +1,5 @@
 import path from "path";
+import * as url from 'url';
 
 const cwd = url.fileURLToPath(new URL('.', import.meta.url));
 const baseData = "/sequencing-data/";
