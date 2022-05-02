@@ -1,7 +1,16 @@
 import path from "path";
 import fs from 'fs';
 
-const parentBase = path.resolve(import.meta.url, '../../');
+const relativePath = import.meta.url + "\\..\\..";
+const parentBase = fs.realpath(relativePath, (error, resolvedPath) => {
+  if (error) {
+    console.log(error);
+  }
+  else {
+    return resolvedPath;
+  }
+});
+
 console.log('pb: ' + parentBase);
 const baseData = "/sequencing-data/";
 const classifiers = path.join(baseData, "classifiers");
