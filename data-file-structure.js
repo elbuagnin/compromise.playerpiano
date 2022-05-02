@@ -10,6 +10,8 @@ const resolvedPath = await fs.realpath(relativePath, (error, resolvedPath) => {
     return resolvedPath;
   }
 });
+console.log('resolved: '+resolvedPath);
+debug();
 const parentBase = resolvedPath.toString().substring(0, resolvedPath.length -5);
 
 console.log('pb: ' + parentBase);
