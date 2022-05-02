@@ -2,6 +2,7 @@ import path from "path";
 import fs from 'fs';
 
 const relativePath = import.meta.url + "\\..\\..";
+console.log('rel path: ' + relativePath);
 const resolvedPath = fs.realpathSync(relativePath);
 console.log('resolved: ' + resolvedPath);
 
