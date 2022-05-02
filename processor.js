@@ -46,7 +46,7 @@ export default function process(doc, parsingData) {
   }
 
   const { process } = parsingData;
-  const processScript = path.resolve(dirs.cwd, dirs.processors, process + ".js");
+  const processScript = path.resolve(parentBase, dirs.processors, process + ".js");
   const processPath = new URL(processScript, import.meta.url);
   //const module = await import(processPath);
   console.log(processPath);

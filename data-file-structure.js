@@ -1,7 +1,8 @@
 import path from "path";
-import * as url from 'url';
+import fs from 'fs';
 
-const cwd = url.fileURLToPath(new URL('../../', import.meta.url));
+const parentBase = fs.realpath('../../');
+console.log(parentBase);
 const baseData = "/sequencing-data/";
 const classifiers = path.join(baseData, "classifiers");
 const classifierKeys = path.join(classifiers, "classification-keys");
