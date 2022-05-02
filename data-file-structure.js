@@ -7,7 +7,7 @@ const parentBase = fs.realpath(relativePath, (error, resolvedPath) => {
     console.log(error);
   }
   else {
-    return resolvedPath;
+    return resolvedPath.substring(0, resolvedPath.length -5);
   }
 });
 
