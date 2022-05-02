@@ -46,42 +46,46 @@ export default function process(doc, parsingData) {
   }
 
   const { process } = parsingData;
+  const processPath = path.join(dirs.processors, process + ".js");
+  const processor = import(process);
+  processor(doc);
+
   const before = doc.clone();
 
-  switch (process) {
-    case "tagDashGroups":
-      tagDashGroups(doc);
-      break;
-    case "expandContractions":
-      const expandContractions = import(
-        path.join(dirs.processors, "expand-contractions.js")
-      );
-      expandContractions(doc);
-      break;
-    case "compoundNouns":
-      compoundNouns(doc);
-      break;
-    case "tagHyphenatedTerms":
-      tagHyphenatedTerms(doc);
-      break;
-    case "ingVerbals":
-      ingVerbals(doc);
-      break;
-    case "lists":
-      lists(doc);
-      break;
-    case "tagParentheses":
-      tagParentheses(doc);
-      break;
-    case "tagPunctuation":
-      tagPunctuation(doc);
-      break;
-    case "tagQuotations":
-      tagQuotations(doc);
-      break;
-    default:
-      break;
-  }
+  // switch (process) {
+  //   case "tagDashGroups":
+  //     tagDashGroups(doc);
+  //     break;
+  //   case "expandContractions":
+  //     const expandContractions = import(
+  //       path.join(dirs.processors, "expand-contractions.js")
+  //     );
+  //     expandContractions(doc);
+  //     break;
+  //   case "compoundNouns":
+  //     compoundNouns(doc);
+  //     break;
+  //   case "tagHyphenatedTerms":
+  //     tagHyphenatedTerms(doc);
+  //     break;
+  //   case "ingVerbals":
+  //     ingVerbals(doc);
+  //     break;
+  //   case "lists":
+  //     lists(doc);
+  //     break;
+  //   case "tagParentheses":
+  //     tagParentheses(doc);
+  //     break;
+  //   case "tagPunctuation":
+  //     tagPunctuation(doc);
+  //     break;
+  //   case "tagQuotations":
+  //     tagQuotations(doc);
+  //     break;
+  //   default:
+  //     break;
+  // }
 
   const after = doc.clone();
   if (equivalentDocs(before, after) === false) {
