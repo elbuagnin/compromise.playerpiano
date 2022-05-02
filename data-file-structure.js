@@ -2,7 +2,7 @@ import path from "path";
 import fs from 'fs';
 
 const relativePath = import.meta.url + "\\..\\..";
-const resolvedPath = await fs.realpath(relativePath, (error, resolvedPath) => {
+const resolvedPath = fs.realpath(relativePath, (error, resolvedPath) => {
   if (error) {
     console.log(error);
   }
