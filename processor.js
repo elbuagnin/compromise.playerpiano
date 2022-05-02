@@ -47,7 +47,7 @@ export default function process(doc, parsingData) {
 
   const { process } = parsingData;
   const processPath = path.join(dirs.processors, process + ".js");
-  const processor = import(process);
+  const processor = import(processPath);
   processor(doc);
 
   const before = doc.clone();
