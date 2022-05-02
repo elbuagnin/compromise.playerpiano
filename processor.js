@@ -45,13 +45,13 @@ export default function process(doc, parsingData) {
     }
   }
 
-  const { process } = parsingData;
-  const processScript = path.join(dirs.parentBase, dirs.processors, process + ".js");
-  const processPath = new URL(processScript, import.meta.url);
-  //const module = await import(processPath);
-  console.log('path: ' + processPath);
-  import(processPath);
-  processor(doc);
+  // const { process } = parsingData;
+  // const processScript = path.join(dirs.parentBase, dirs.processors, process + ".js");
+  // const processPath = new URL(processScript, import.meta.url);
+  // //const module = await import(processPath);
+  // console.log('path: ' + processPath);
+  // import(processPath);
+  // processor(doc);
 
   const before = doc.clone();
 
