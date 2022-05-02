@@ -2,7 +2,7 @@ import path from "path";
 import fs from 'fs';
 
 const relativePath = import.meta.url + "\\..\\..";
-const resolvedPath = fs.realpath(relativePath, (error, resolvedPath) => {
+const resolvedPath = await fs.realpath(relativePath, (error, resolvedPath) => {
   if (error) {
     console.log(error);
   }
@@ -10,7 +10,7 @@ const resolvedPath = fs.realpath(relativePath, (error, resolvedPath) => {
     return resolvedPath;
   }
 });
-const parentBase = resolvedPath.substring(0, resolvedPath.length -5);
+const parentBase = resolvedPath.toString().substring(0, resolvedPath.length -5);
 
 console.log('pb: ' + parentBase);
 const baseData = "/sequencing-data/";
