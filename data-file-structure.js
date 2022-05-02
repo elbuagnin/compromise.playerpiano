@@ -2,7 +2,7 @@ import path from "path";
 import fs from 'fs';
 
 const parentBase = import.meta.url;
-console.log(parentBase);
+console.log('pb: ' + parentBase);
 const baseData = "/sequencing-data/";
 const classifiers = path.join(baseData, "classifiers");
 const classifierKeys = path.join(classifiers, "classification-keys");
