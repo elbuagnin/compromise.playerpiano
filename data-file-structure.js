@@ -9,7 +9,7 @@ const classifierByClassifications = path.join(
   "terms-by-classifications"
 );
 const classifierPatterns = path.join(classifiers, "classifier-patterns");
-const processors = path.join(".", baseData, "doc-processors");
+const processors = path.join(baseData, "doc-processors");
 const subSequences = path.join(baseData, "sub-sequences");
 const tagPatterns = path.join(baseData, "tag-by-patterns");
 const initialization = path.join(baseData, "world-initialization");
