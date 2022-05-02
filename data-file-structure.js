@@ -1,5 +1,6 @@
 import path from "path";
 
+const cwd = url.fileURLToPath(new URL('.', import.meta.url));
 const baseData = "/sequencing-data/";
 const classifiers = path.join(baseData, "classifiers");
 const classifierKeys = path.join(classifiers, "classification-keys");
