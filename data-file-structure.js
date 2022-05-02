@@ -2,16 +2,9 @@ import path from "path";
 import fs from 'fs';
 
 const relativePath = import.meta.url + "\\..\\..";
-const resolvedPath = fs.realpath(relativePath, (error, resolvedPath) => {
-  if (error) {
-    console.log(error);
-  }
-  else {
-    return resolvedPath;
-  }
-});
-console.log('resolved: '+resolvedPath);
-debug();
+const resolvedPath = fs.realpathSync(relativePath);
+console.log('resolved: ' + resolvedPath);
+
 const parentBase = resolvedPath.toString().substring(0, resolvedPath.length -5);
 
 console.log('pb: ' + parentBase);
