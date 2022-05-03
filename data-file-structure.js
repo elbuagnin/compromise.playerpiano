@@ -18,16 +18,10 @@ const tags = path.join(initialization, "tags");
 const words = path.join(initialization, "words");
 
 const here = import.meta.url;
-const relativePath = path.normalize(here + '/..//..//..//' + baseData);
-console.log('rel path: ' + relativePath);
-//const resolvedPath = path.normalize(relativePath);
-// console.log('resolved: ' + resolvedPath);
-//
-// const parentBase = resolvedPath.toString().substring(0, resolvedPath.length -5);
-//
-// console.log('pb: ' + parentBase);
+const parentBase = path.normalize(here + '/..//..//..//' + baseData);
 
 export {
+  parentBase,
   baseData,
   classifiers,
   classifierKeys,
