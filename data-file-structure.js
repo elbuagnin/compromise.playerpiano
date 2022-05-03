@@ -19,6 +19,7 @@ const words = path.join(initialization, "words");
 
 const here = import.meta.url;
 const parentBase = path.normalize(here + '/..//..//..//');
+console.log('pb: ' + parentBase);
 
 export {
   parentBase,
