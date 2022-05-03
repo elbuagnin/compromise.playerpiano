@@ -18,7 +18,7 @@ const tags = path.join(initialization, "tags");
 const words = path.join(initialization, "words");
 
 const here = import.meta.url;
-const parentBase = path.normalize(here + '/..//..//..//' + baseData);
+const parentBase = path.normalize(here + '/..//..//..//');
 
 export {
   parentBase,
