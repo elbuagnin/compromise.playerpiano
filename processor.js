@@ -48,10 +48,10 @@ export default function process(doc, parsingData) {
   const { process } = parsingData;
   const processPath = path.join(dirs.parentBase, dirs.processors, process + ".js");
   //const processPath = new URL(processScript, import.meta.url);
-  //const module = await import(processPath);
-  console.log('path: ' + processPath);
-  import(processPath);
-  processor(doc);
+  const module = await import(processPath);
+  console.log('path: ' + JSON.stringify(module));
+  //import(processPath);
+  module.processor(doc);
 
   const before = doc.clone();
 
