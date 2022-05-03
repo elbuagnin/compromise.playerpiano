@@ -49,7 +49,7 @@ export default function process(doc, parsingData) {
     const processPath = path.join(dirs.parentBase, dirs.processors, process + ".js");
     console.log('pp: ' + processPath);
 
-    import(processPath);
+    const processor = import(processPath);
     (async () => {
         (await processor).processFunction(doc);
     })().catch(err => console.error(err));
