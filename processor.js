@@ -45,12 +45,18 @@ export default function process(doc, parsingData) {
     }
   }
 
+  function runProcess(process, doc) {
+    const processPath = path.join(dirs.parentBase, dirs.processors, process + ".js");
+    console.log('pp: ' + processPath);
+
+    import { processor } from processPath;
+    (async () => {
+        (await processor).processFunction(doc);
+    })().catch(err => console.error(err));
+  }
+
   const { process } = parsingData;
-  const processPath = path.join(dirs.parentBase, dirs.processors, process + ".js");
-  console.log('pp: ' + processPath);
-  import(processPath);
-//  console.log('path: ' + JSON.stringify(md));
-  processor(doc);
+  runProcess(process, doc);
 
   const before = doc.clone();
 
