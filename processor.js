@@ -51,12 +51,13 @@ export default function process(doc, parsingData) {
 
     const processor = await import(processPath);
     processor.default(doc);
+    console.log(JSON.stringify(processor));
   }
 
   const { process } = parsingData;
 
   const before = doc.clone();
-  await runProcess(process, doc);
+  runProcess(process, doc);
   const after = doc.clone();
 
   if (equivalentDocs(before, after) === false) {
