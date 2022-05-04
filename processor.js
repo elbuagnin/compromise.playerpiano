@@ -50,7 +50,7 @@ export default function process(doc, parsingData) {
     console.log('pp: ' + processPath);
 
     import(processPath)
-      .then (proc => {proc(doc)});
+      .then (processor => {processor(doc)});
     //processor(doc);
     //console.log(Object.getOwnPropertyNames(proc));
   }
