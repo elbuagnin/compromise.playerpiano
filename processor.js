@@ -51,7 +51,7 @@ export default function process(doc, parsingData) {
 
     const proc = await import(processPath);
     proc.default(doc);
-    console.log(JSON.stringify(proc.processor));
+    console.log(Object.getOwnPropertyNames(proc));
   }
 
   const { process } = parsingData;
