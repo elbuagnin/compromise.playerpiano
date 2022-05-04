@@ -52,13 +52,14 @@ export default function process(doc, parsingData) {
     (async () => {
         let proc = await import(processPath);
         proc.default(doc);
+        console.log('inside async. proc now completed');
     })();
   }
 
   const { process } = parsingData;
 console.log('Just past the process call.');
   const before = doc.clone();
-  await runProcess(process, doc);
+  runProcess(process, doc);
   const after = doc.clone();
 
   if (equivalentDocs(before, after) === false) {
