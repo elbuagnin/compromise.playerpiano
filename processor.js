@@ -50,7 +50,7 @@ export default function process(doc, parsingData) {
     console.log('pp: ' + processPath);
 
     const proc = await import(processPath);
-    proc.processor(doc);
+    proc.default(doc);
     console.log(JSON.stringify(proc.processor));
   }
 
