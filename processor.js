@@ -1,7 +1,6 @@
 import path from "path";
 import * as dirs from "./data-file-structure.js";
 import * as helpers from "./lib/word-helpers.js";
-import {execSync} from 'child_process';
 
 export default function process(doc, parsingData) {
   function equivalentDocs(docA, docB) {
@@ -56,17 +55,15 @@ export default function process(doc, parsingData) {
         proc.default(doc);
 
         console.log('inside async. proc now completed');
-    })().then(() => finished = true);
+    })().then(() => return true);
   }
 
   const { process } = parsingData;
   const before = doc.clone();
 
-  runProcess(process, doc);
-
   const wait = async () => {
       while (finished === false) {
-        execSync('sleep .1');
+        finished = runProcess(process, doc);
     }
   }
 
