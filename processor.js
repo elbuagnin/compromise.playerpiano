@@ -54,9 +54,9 @@ export default function process(doc, parsingData) {
     (async () => {
         let proc = await import(processPath);
         proc.default(doc);
-        finished = true;
+
         console.log('inside async. proc now completed');
-    })();
+    })().then(() => finished = true;);
   }
 
   const { process } = parsingData;
