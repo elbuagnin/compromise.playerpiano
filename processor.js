@@ -63,9 +63,13 @@ export default function process(doc, parsingData) {
 
   runProcess(process, doc);
 
-  while (finished === false) {
-    await new Promise(r => setTimeout(r, 1));
+  const wait = async () => {
+      while (finished === false) {
+      await new Promise(r => setTimeout(r, 1));
+    }
   }
+
+  wait();
 
 console.log('Just past the process call.');
 
