@@ -49,7 +49,7 @@ export default function process(doc, parsingData) {
     const processPath = path.join(dirs.parentBase, dirs.processors, process + ".js");
     console.log('pp: ' + processPath);
 
-    await import(processPath)
+    import(processPath)
       .then(proc) => {proc(doc)};
     //processor(doc);
     //console.log(Object.getOwnPropertyNames(proc));
