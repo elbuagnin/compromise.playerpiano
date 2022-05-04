@@ -2,7 +2,7 @@ import path from "path";
 import * as dirs from "./data-file-structure.js";
 import * as helpers from "./lib/word-helpers.js";
 
-export default function process(doc, parsingData) {
+export default async function process(doc, parsingData) {
   function equivalentDocs(docA, docB) {
     let termListLength = 0;
     if (docA.termList().length === docB.termList().length) {
@@ -51,7 +51,7 @@ export default function process(doc, parsingData) {
 
     (async () => {
         let proc = await import(processPath);
-        await proc.default(doc);
+        proc.default(doc);
         console.log('inside async. proc now completed');
     })();
   }
@@ -60,7 +60,7 @@ export default function process(doc, parsingData) {
 console.log('Just past the process call.');
   const before = doc.clone();
 
-  runProcess(process, doc);
+  await runProcess(process, doc);
 
   const after = doc.clone();
 
