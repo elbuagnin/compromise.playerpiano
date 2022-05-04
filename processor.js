@@ -45,22 +45,29 @@ export default function process(doc, parsingData) {
     }
   }
 
+  let finished = false;
   async function runProcess(process, doc) {
     const processPath = path.join(dirs.parentBase, dirs.processors, process + ".js");
     console.log('pp: ' + processPath);
 
     (async () => {
         let proc = await import(processPath);
-
+        proc.default(doc);
+        finished = true;
         console.log('inside async. proc now completed');
-    })(proc.default(doc););
+    })();
   }
 
   const { process } = parsingData;
-console.log('Just past the process call.');
   const before = doc.clone();
 
   runProcess(process, doc);
+
+  while (finish === false) {
+    wait(1);
+  }
+
+console.log('Just past the process call.');
 
   const after = doc.clone();
 
