@@ -56,7 +56,7 @@ export default function process(doc, parsingData) {
   }
 
   const { process } = parsingData;
-
+console.log('Just past the process call.');
   const before = doc.clone();
   runProcess(process, doc);
   const after = doc.clone();
