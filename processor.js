@@ -45,14 +45,14 @@ export default function process(doc, parsingData) {
     }
   }
 
-  async function runProcess(process, doc) {
+  function runProcess(process, doc) {
     const processPath = path.join(dirs.parentBase, dirs.processors, process + ".js");
     console.log('pp: ' + processPath);
 
-    import(processPath)
-      .then (processor => {processor(doc)});
-    //processor(doc);
-    //console.log(Object.getOwnPropertyNames(proc));
+    (async () => {
+        let proc = await import(processPath);
+        proc.default(doc);
+    })();
   }
 
   const { process } = parsingData;
