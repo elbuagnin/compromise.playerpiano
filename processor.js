@@ -1,6 +1,7 @@
 import path from "path";
 import * as dirs from "./data-file-structure.js";
 import * as helpers from "./lib/word-helpers.js";
+import {execSync} from 'child_process';
 
 export default function process(doc, parsingData) {
   function equivalentDocs(docA, docB) {
@@ -65,7 +66,7 @@ export default function process(doc, parsingData) {
 
   const wait = async () => {
       while (finished === false) {
-      await new Promise(r => setTimeout(r, 1));
+        execSync('sleep .1');
     }
   }
 
