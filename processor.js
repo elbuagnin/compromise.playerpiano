@@ -54,46 +54,11 @@ export default function process(doc, parsingData) {
   }
 
   const { process } = parsingData;
-  runProcess(process, doc);
 
   const before = doc.clone();
-
-  // switch (process) {
-  //   case "tagDashGroups":
-  //     tagDashGroups(doc);
-  //     break;
-  //   case "expandContractions":
-  //     const expandContractions = import(
-  //       path.join(dirs.processors, "expand-contractions.js")
-  //     );
-  //     expandContractions(doc);
-  //     break;
-  //   case "compoundNouns":
-  //     compoundNouns(doc);
-  //     break;
-  //   case "tagHyphenatedTerms":
-  //     tagHyphenatedTerms(doc);
-  //     break;
-  //   case "ingVerbals":
-  //     ingVerbals(doc);
-  //     break;
-  //   case "lists":
-  //     lists(doc);
-  //     break;
-  //   case "tagParentheses":
-  //     tagParentheses(doc);
-  //     break;
-  //   case "tagPunctuation":
-  //     tagPunctuation(doc);
-  //     break;
-  //   case "tagQuotations":
-  //     tagQuotations(doc);
-  //     break;
-  //   default:
-  //     break;
-  // }
-
+  runProcess(process, doc);
   const after = doc.clone();
+
   if (equivalentDocs(before, after) === false) {
     // console\.log.*
   }
