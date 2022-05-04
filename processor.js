@@ -45,7 +45,7 @@ export default function process(doc, parsingData) {
     }
   }
 
-  function runProcess(process, doc) {
+  async function runProcess(process, doc) {
     const processPath = path.join(dirs.parentBase, dirs.processors, process + ".js");
     console.log('pp: ' + processPath);
 
@@ -58,7 +58,7 @@ export default function process(doc, parsingData) {
   const { process } = parsingData;
 console.log('Just past the process call.');
   const before = doc.clone();
-  runProcess(process, doc);
+  await runProcess(process, doc);
   const after = doc.clone();
 
   if (equivalentDocs(before, after) === false) {
