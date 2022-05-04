@@ -45,15 +45,20 @@ export default function process(doc, parsingData) {
     }
   }
 
-  let finished = false;
-  async function runProcess(process, doc) {
+
+  function runProcess(process, doc) {
+    let finished = false;
     const processPath = path.join(dirs.parentBase, dirs.processors, process + ".js");
     console.log('pp: ' + processPath);
 
-    (async () => {
-        let proc = await import(processPath);
+        import(processPath)
+          .then(() => finished = true);
         proc.default(doc);
 
+        while (finished === false) {
+          setTimeout(() => {console.log("waiting...")}, 500);
+          console.log(finished);
+        }
         console.log('inside async. proc now completed');
     })
     return true;
