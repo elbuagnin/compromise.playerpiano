@@ -63,7 +63,7 @@ export default function process(doc, parsingData) {
 
   runProcess(process, doc);
 
-  while (finish === false) {
+  while (finished === false) {
     wait(1);
   }
 
