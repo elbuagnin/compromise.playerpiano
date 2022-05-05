@@ -46,6 +46,7 @@ export default function process(doc, parsingData) {
   }
 
   function runProcess(process, doc) {
+    let finished = false;
     import(processPath)
       .then((proc) => {
         proc.default(doc);
@@ -72,7 +73,6 @@ export default function process(doc, parsingData) {
   console.log("pp: " + processPath);
 
   const before = doc.clone();
-  let finished = false;
   runProcess(process, doc);
   console.log("Just past the process call.");
 
