@@ -46,9 +46,8 @@ export default function process(doc, parsingData) {
   }
 
   async function runAsyncProcess(process, doc) {
-    import(processPath).then((proc) => {
-      proc.default(doc);
-    });
+    const proc = await import(processPath);
+    proc.default(doc);
   }
 
   function runProcess(process, doc) {
