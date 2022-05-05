@@ -46,22 +46,15 @@ export default function process(doc, parsingData) {
     }
   }
 
-  const runProcess = new Promise(function(resolve, reject) {
-      runAsyncProcess(processPath, doc) {
-          if (err) {
-              reject(err);
-          } else {
-              resolve(console.log('complete'));
-          }
-      })
-  });
-
   function runAsyncProcess(processPath, doc) {
-    import(processPath)
+    return new Promise((resolve, reject)=>
+    {
+      import(processPath)
       .then((proc) => {
-        proc.default(doc);
+        resolve(proc.default(doc));
       })
-      .catch((err) => console.error(err));
+      .catch((err) => reject(console.error(err)));
+    }
   }
 
   const { process } = parsingData;
@@ -75,7 +68,7 @@ export default function process(doc, parsingData) {
 
   const before = doc.clone();
 
-  deasync(runProcess(processPath, doc));
+  deasync(runAsyncProcess(processPath, doc));
 
   console.log("Just past the process call.");
   const after = doc.clone();
