@@ -66,8 +66,12 @@ export default function process(doc, parsingData) {
   console.log("pp: " + processPath);
 
   const before = doc.clone();
-
-  deasync(runAsyncProcess(processPath, doc));
+  const runProcess = deasync(runAsyncProcess(processPath, doc));
+  try {
+    runProcess;
+  } catch (err) {
+    console.log(err);
+  }
 
   console.log("Just past the process call.");
   const after = doc.clone();
