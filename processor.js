@@ -52,10 +52,11 @@ export default function process(doc, parsingData) {
     console.log('pp: ' + processPath);
 
     import(processPath)
+      .then((proc) => {proc.default(doc)})
       .then(() => finished = true);
 
     while (finished === false) {
-      setTimeout(() => {console.log("waiting...")}, 500);
+      setTimeout(() => {console.log("waiting...")}, 100);
       console.log(finished);
     }
 
