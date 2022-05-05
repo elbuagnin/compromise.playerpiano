@@ -1,7 +1,7 @@
 import path from "path";
 import * as dirs from "./data-file-structure.js";
 import * as helpers from "./lib/word-helpers.js";
-import sync from "sync";
+import deasync from "deasync";
 
 export default function process(doc, parsingData) {
   function equivalentDocs(docA, docB) {
@@ -51,10 +51,6 @@ export default function process(doc, parsingData) {
     proc.default(doc);
   }
 
-  function runProcess(process, doc) {
-    runAsyncProcess(process, doc);
-  }
-
   const { process } = parsingData;
   console.log(process);
   const processPath = path.join(
@@ -65,7 +61,7 @@ export default function process(doc, parsingData) {
   console.log("pp: " + processPath);
 
   const before = doc.clone();
-  runProcess(process, doc);
+  deasync(runAsyncProcess(process, doc));
   console.log("Just past the process call.");
   const after = doc.clone();
 
