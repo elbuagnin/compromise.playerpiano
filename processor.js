@@ -1,9 +1,11 @@
 import path from "path";
+import deasync from "deasync";
 import * as dirs from "./data-file-structure.js";
 import * as helpers from "./lib/word-helpers.js";
-import deasync from "deasync";
 
+// Run custom imported functions from calling module.
 export default function process(doc, parsingData) {
+  // Compare two doc objects to see if they are equivalent in words and tags.
   function equivalentDocs(docA, docB) {
     let termListLength = 0;
     if (docA.termList().length === docB.termList().length) {
@@ -46,6 +48,9 @@ export default function process(doc, parsingData) {
     }
   }
 
+  // Import dynamically calling module's custom functions
+  // import() is asynchronous, so we will have to call it
+  // in a fashion to wrap it synchronously.
   function runAsyncProcess(processPath, doc) {
     import(processPath)
       .then((proc) => {
@@ -62,23 +67,25 @@ export default function process(doc, parsingData) {
     dirs.processors,
     process + ".js"
   );
-  console.log("pp: " + processPath);
 
-  const before = doc.clone();
-  let done = false;
+  const before = doc.clone(); // for debugging output
+
   const runProcess = deasync(runAsyncProcess(processPath, doc));
+  let done = false;
+
   deasync.loopWhile(function () {
     return !done;
   });
 
-  console.log("Just past the process call.");
-  const after = doc.clone();
+  const after = doc.clone(); // for debugging output
 
   console.log("Before:");
   before.debug();
   console.log("After:");
   after.debug();
 
+  console.log(equivalentDocs(before, after));
+  // Send debugging output if there is a change in the doc.
   if (equivalentDocs(before, after) === false) {
     console.log("Processed:");
     doc.debug();
