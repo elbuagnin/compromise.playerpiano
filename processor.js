@@ -1,6 +1,7 @@
 import path from "path";
 import * as dirs from "./data-file-structure.js";
 import * as helpers from "./lib/word-helpers.js";
+import sync from "sync";
 
 export default function process(doc, parsingData) {
   function equivalentDocs(docA, docB) {
