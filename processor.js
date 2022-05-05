@@ -46,12 +46,10 @@ export default function process(doc, parsingData) {
   }
 
   function runProcess(process, doc) {
-    //let finished = false;
-    import(processPath)
-      .then((proc) => {
-        proc.default(doc);
-      })
-      .then(() => (finished = true));
+    // let finished = false;
+    import(processPath).then((proc) => {
+      proc.default(doc);
+    });
 
     // while (finished === false) {
     //   setTimeout(() => {
@@ -75,7 +73,6 @@ export default function process(doc, parsingData) {
   const before = doc.clone();
   runProcess(process, doc);
   console.log("Just past the process call.");
-
   const after = doc.clone();
 
   if (equivalentDocs(before, after) === false) {
