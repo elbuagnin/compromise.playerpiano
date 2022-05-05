@@ -45,20 +45,14 @@ export default function process(doc, parsingData) {
     }
   }
 
-  function runProcess(process, doc) {
-    // let finished = false;
+  async function runAsyncProcess(process, doc) {
     import(processPath).then((proc) => {
       proc.default(doc);
     });
+  }
 
-    // while (finished === false) {
-    //   setTimeout(() => {
-    //     console.log("waiting...");
-    //   }, 50);
-    //   console.log(finished);
-    // }
-
-    console.log("inside async. proc now completed");
+  function runProcess(process, doc) {
+    runAsyncProcess(process, doc);
   }
 
   const { process } = parsingData;
