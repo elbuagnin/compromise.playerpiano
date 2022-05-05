@@ -62,6 +62,8 @@ export default function process(doc, parsingData) {
     console.log("inside async. proc now completed");
   }
 
+  const { process } = parsingData;
+  console.log(process);
   const processPath = path.join(
     dirs.parentBase,
     dirs.processors,
@@ -69,9 +71,7 @@ export default function process(doc, parsingData) {
   );
   console.log("pp: " + processPath);
 
-  const { process } = parsingData;
   const before = doc.clone();
-  console.log(process);
   let finished = false;
   runProcess(process, doc);
   console.log("Just past the process call.");
