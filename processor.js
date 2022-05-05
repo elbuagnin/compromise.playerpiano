@@ -66,7 +66,10 @@ export default function process(doc, parsingData) {
 
   const before = doc.clone();
   let done = false;
-  deasync.loopWhile(runAsyncProcess(processPath, doc){return !done;});
+  const runProcess = deasync(runAsyncProcess(processPath, doc));
+  deasync.loopWhile(function () {
+    return !done;
+  });
 
   console.log("Just past the process call.");
   const after = doc.clone();
