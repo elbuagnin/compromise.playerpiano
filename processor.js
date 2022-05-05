@@ -46,19 +46,19 @@ export default function process(doc, parsingData) {
   }
 
   function runProcess(process, doc) {
-    let finished = false;
+    //let finished = false;
     import(processPath)
       .then((proc) => {
         proc.default(doc);
       })
       .then(() => (finished = true));
 
-    while (finished === false) {
-      setTimeout(() => {
-        console.log("waiting...");
-      }, 50);
-      console.log(finished);
-    }
+    // while (finished === false) {
+    //   setTimeout(() => {
+    //     console.log("waiting...");
+    //   }, 50);
+    //   console.log(finished);
+    // }
 
     console.log("inside async. proc now completed");
   }
