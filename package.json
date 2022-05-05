@@ -26,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/elbuagnin/compromise.pianoplayer/issues"
   },
-  "homepage": "https://github.com/elbuagnin/compromise.pianoplayer#readme"
+  "homepage": "https://github.com/elbuagnin/compromise.pianoplayer#readme",
+  "dependencies": {
+    "deasync": "^0.1.26"
+  }
 }
