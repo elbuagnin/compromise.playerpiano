@@ -47,14 +47,13 @@ export default function process(doc, parsingData) {
   }
 
   function runAsyncProcess(processPath, doc) {
-    return new Promise((resolve, reject)=>
-    {
+    return new Promise((resolve, reject) => {
       import(processPath)
-      .then((proc) => {
-        resolve(proc.default(doc));
-      })
-      .catch((err) => reject(console.error(err)));
-    }
+        .then((proc) => {
+          resolve(proc.default(doc));
+        })
+        .catch((err) => reject(console.error(err)));
+    });
   }
 
   const { process } = parsingData;
