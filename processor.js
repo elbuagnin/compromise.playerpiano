@@ -60,7 +60,7 @@ export default function process(doc, parsingData) {
           console.log(finished);
         }
         console.log('inside async. proc now completed');
-    })
+    }
     return true;
   }
 
