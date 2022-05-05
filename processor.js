@@ -46,10 +46,10 @@ export default function process(doc, parsingData) {
     }
   }
 
-  async function runAsyncProcess(process, doc) {
-    const proc = await import(processPath);
-    proc.default(doc);
-  }
+  // async function runAsyncProcess(process, doc) {
+  //   const proc = await import(processPath);
+  //   proc.default(doc);
+  // }
 
   const { process } = parsingData;
   console.log(process);
@@ -61,7 +61,8 @@ export default function process(doc, parsingData) {
   console.log("pp: " + processPath);
 
   const before = doc.clone();
-  deasync(runAsyncProcess(process, doc));
+  const proc = deasync(import(processPath));
+  proc.default(doc);
   console.log("Just past the process call.");
   const after = doc.clone();
 
