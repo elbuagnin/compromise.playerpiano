@@ -46,15 +46,15 @@ export default function process(doc, parsingData) {
     }
   }
 
-  // const runProcess = new Promise(function(resolve, reject) {
-  //     runAsyncProcess(processPath, doc) {
-  //         if (err) {
-  //             reject(err);
-  //         } else {
-  //             resolve(JSON.parse(body));
-  //         }
-  //     })
-  // });
+  const runProcess = new Promise(function(resolve, reject) {
+      runAsyncProcess(processPath, doc) {
+          if (err) {
+              reject(err);
+          } else {
+              resolve(console.log('complete'));
+          }
+      })
+  });
 
   function runAsyncProcess(processPath, doc) {
     import(processPath)
@@ -75,7 +75,7 @@ export default function process(doc, parsingData) {
 
   const before = doc.clone();
 
-  deasync(runAsyncProcess(processPath, doc));
+  deasync(runProcess(processPath, doc));
 
   console.log("Just past the process call.");
   const after = doc.clone();
