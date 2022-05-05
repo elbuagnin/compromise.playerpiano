@@ -17,10 +17,10 @@ export default function process(doc, parsingData) {
         const docBTags = docB.termList()[i].tags;
 
         if (Object.keys(docATags).length === Object.keys(docBTags).length) {
-          Object.keys(docATags).forEach(docATag => {
+          Object.keys(docATags).forEach((docATag) => {
             tagCount++;
 
-            Object.keys(docBTags).forEach(docBTag => {
+            Object.keys(docBTags).forEach((docBTag) => {
               if (docATag === docBTag) {
                 n++;
               }
@@ -45,35 +45,41 @@ export default function process(doc, parsingData) {
     }
   }
 
-
   function runProcess(process, doc) {
-    let finished = false;
-    const processPath = path.join(dirs.parentBase, dirs.processors, process + ".js");
-    console.log('pp: ' + processPath);
-
     import(processPath)
-      .then((proc) => {proc.default(doc)})
-      .then(() => finished = true);
+      .then((proc) => {
+        proc.default(doc);
+      })
+      .then(() => (finished = true));
 
     while (finished === false) {
-      setTimeout(() => {console.log("waiting...")}, 100);
+      setTimeout(() => {
+        console.log("waiting...");
+      }, 50);
       console.log(finished);
     }
 
-    proc.default(doc);
-    console.log('inside async. proc now completed');
+    console.log("inside async. proc now completed");
   }
+
+  const processPath = path.join(
+    dirs.parentBase,
+    dirs.processors,
+    process + ".js"
+  );
+  console.log("pp: " + processPath);
 
   const { process } = parsingData;
   const before = doc.clone();
-
+  console.log(process);
+  let finished = false;
   runProcess(process, doc);
-  console.log('Just past the process call.');
+  console.log("Just past the process call.");
 
   const after = doc.clone();
 
   if (equivalentDocs(before, after) === false) {
-    console.log('Processed:');
+    console.log("Processed:");
     doc.debug();
   }
 }
