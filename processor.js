@@ -63,7 +63,7 @@ export default function process(doc, parsingData) {
   const { process } = parsingData;
   console.log(process);
   const processPath = path.join(
-    dirs.parentBase,
+    dirs.parentHome,
     dirs.processors,
     process + ".js"
   );

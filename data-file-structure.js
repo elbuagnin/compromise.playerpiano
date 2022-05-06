@@ -1,7 +1,15 @@
 import path from "path";
-import fs from 'fs';
+import fs from "fs";
 
-const baseData = "/sequencing-data/";
+const here = import.meta.url;
+const parentHome = process.cwd();
+console.log("pb: " + parentHome);
+const pathAdjustment = path.relative(here, parentHome);
+console.log(pathAdjustment);
+const parentImportPathHome = path.resolve(pathAdjustment);
+console.log(parentImportPathHome);
+
+const baseData = path.resolve(parentHome, "/sequencing-data/");
 const classifiers = path.join(baseData, "classifiers");
 const classifierKeys = path.join(classifiers, "classification-keys");
 const classifierByTerms = path.join(classifiers, "classifications-by-terms");
@@ -17,12 +25,8 @@ const initialization = path.join(baseData, "world-initialization");
 const tags = path.join(initialization, "tags");
 const words = path.join(initialization, "words");
 
-const here = import.meta.url;
-const parentBase = path.normalize(here + '/..//..//..//');
-console.log('pb: ' + parentBase);
-
 export {
-  parentBase,
+  parentHome,
   baseData,
   classifiers,
   classifierKeys,
@@ -34,5 +38,5 @@ export {
   tagPatterns,
   initialization,
   tags,
-  words
+  words,
 };
