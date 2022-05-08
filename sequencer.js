@@ -45,9 +45,8 @@ export default function sequencer(document) {
     const returnType = "array";
     const subSequence = mfs.loadJSONFile(filepath, returnType);
     subSequence.sort((a, b) => a.order - b.order);
-    logger("Sub-Sequence:", "header");
     subSequence.forEach((subInstruction) => {
-      logger(subInstruction);
+      logger(subInstruction, "subtitle", "sub-sequence instruction");
       execute(subInstruction);
     });
   }
@@ -58,7 +57,7 @@ export default function sequencer(document) {
   sequence.sort((a, b) => a.order - b.order);
 
   sequence.forEach((instruction, key) => {
-    logger(instruction, "title");
+    logger(instruction, "title", "instruction");
     if (instruction.action === "sub-sequence") {
       subSequencer(instruction.payload.file);
     } else {
