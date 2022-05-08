@@ -3,11 +3,8 @@ import fs from "fs";
 
 const here = import.meta.url;
 const parentHome = process.cwd();
-console.log("pb: " + parentHome);
 const pathAdjustment = path.relative(here, parentHome);
-console.log(pathAdjustment);
 const parentImportPathHome = path.resolve(pathAdjustment);
-console.log(parentImportPathHome);
 
 const baseData = path.resolve(parentHome, "/sequencing-data/");
 const classifiers = path.join(baseData, "classifiers");

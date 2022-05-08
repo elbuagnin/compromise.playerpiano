@@ -1,3 +1,4 @@
+import logger from "./logger.js";
 import classifications from "./classifications-key.js";
 import classifyByPatternTests from "./classifier-patterns.js";
 
@@ -17,12 +18,12 @@ export default function disambiguate(doc, term, match) {
       "OpenParentheses",
       "CloseParentheses",
       "OpenQuote",
-      "CloseQuote"
+      "CloseQuote",
     ];
 
     const oldTags = Object.values(docWord.out("tags")[0])[0];
 
-    const filteredTags = oldTags.filter(tag => {
+    const filteredTags = oldTags.filter((tag) => {
       if (!tagExceptions.includes(tag)) {
         return tag;
       }
@@ -73,7 +74,7 @@ export default function disambiguate(doc, term, match) {
         return count;
       }
 
-      tests.forEach(test => {
+      tests.forEach((test) => {
         let chunk = findChunk(test.scope);
 
         let frontPattern = test.pattern.substring(
@@ -144,11 +145,11 @@ export default function disambiguate(doc, term, match) {
     let result = 0;
     const testTypes = ["negative", "improbable", "probable", "positive"];
     const testSet = classifyByPatternTests.filter(
-      test => test.pos === classification
+      (test) => test.pos === classification
     );
 
-    testTypes.forEach(type => {
-      const tests = testSet.filter(test => test.type === type);
+    testTypes.forEach((type) => {
+      const tests = testSet.filter((test) => test.type === type);
       testing(tests, match);
     });
 
@@ -189,14 +190,14 @@ export default function disambiguate(doc, term, match) {
   const word = term.word;
   // console\.log.*
   if (!match.has("#Resolved")) {
-    const POSes = term.POSes.map(pos => classifications(pos));
+    const POSes = term.POSes.map((pos) => classifications(pos));
 
     const results = {};
-    Object.values(POSes).forEach(pos => {
+    Object.values(POSes).forEach((pos) => {
       results[pos] = 0;
     });
 
-    Object.values(POSes).forEach(pos => {
+    Object.values(POSes).forEach((pos) => {
       results[pos] = isClassification(word, pos, match);
     });
     // console\.log.*
@@ -215,8 +216,7 @@ export default function disambiguate(doc, term, match) {
         clearOldTags(match);
         match.tag(disambiguatedPOS);
         match.tag("Resolved");
-        // console\.log.*
-        // console\.log.*
+        logger(match, "label", "Disambiguated");
 
         return;
       }
