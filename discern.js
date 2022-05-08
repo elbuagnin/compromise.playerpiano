@@ -2,7 +2,7 @@ import logger from "./logger.js";
 import classifications from "./classifications-key.js";
 import classifyByPatternTests from "./classifier-patterns.js";
 
-export default function disambiguate(doc, term, match) {
+export default function discern(doc, term, match) {
   function compromiseTagged(tag) {
     return "#" + tag.charAt(0).toUpperCase() + tag.slice(1);
   }
@@ -156,7 +156,7 @@ export default function disambiguate(doc, term, match) {
     return result;
   }
 
-  function disambiguateResults(results) {
+  function discernResults(results) {
     const ties = [];
     const winner = Object.keys(results).reduce((previous, current) => {
       const diff = results[current] - results[previous];
@@ -201,22 +201,22 @@ export default function disambiguate(doc, term, match) {
       results[pos] = isClassification(word, pos, match);
     });
     // console\.log.*
-    const winner = disambiguateResults(results);
+    const winner = discernResults(results);
 
     if (winner.length > 1) {
       return;
     } else {
-      const disambiguatedPOS = compromiseTagged(winner[0]);
+      const discernedClassification = compromiseTagged(winner[0]);
 
-      if (match.has(disambiguatedPOS)) {
+      if (match.has(discernedClassification)) {
         match.tag("Resolved");
 
         return;
       } else {
         clearOldTags(match);
-        match.tag(disambiguatedPOS);
+        match.tag(discernedClassification);
         match.tag("Resolved");
-        logger(match, "label", "Disambiguated");
+        logger(match, "label", "discerned");
 
         return;
       }

@@ -1,16 +1,16 @@
 import logger from "./logger.js";
 
 export default function tagger(doc, payload) {
-  const { pattern, term, tag, untag, disambiguate } = payload;
+  const { pattern, term, tag, untag, discern } = payload;
 
   if (doc.has(pattern)) {
     const matchedTerm = doc.match(pattern).match(term);
 
     if (
-      (disambiguate === true && !matchedTerm.has("#Resolved")) ||
-      disambiguate !== true
+      (discern === true && !matchedTerm.has("#Resolved")) ||
+      discern !== true
     ) {
-      if (disambiguate === true) {
+      if (discern === true) {
         const oldTags = Object.values(matchedTerm.out("tags")[0])[0];
         logger("Removing previous tags", "header");
         matchedTerm.unTag(oldTags);

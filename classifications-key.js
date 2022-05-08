@@ -5,7 +5,7 @@ import path from "path";
 const posNameTableFile = path.join(dirs.classifierKeys, "pos-name-table.json");
 const posNameTable = mfs.loadJSONFile(posNameTableFile, "array");
 
-export default function posNameNormalize(posNameFromData) {
+export default function classificationNameNormalize(posNameFromData) {
   const dropCapitalPosNameFromData =
     posNameFromData[0].toLowerCase() + posNameFromData.slice(1);
   let normalizedName = false;
