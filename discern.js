@@ -76,7 +76,7 @@ export default function discern(doc, term, match) {
 
       tests.forEach((test) => {
         let chunk = findChunk(test.scope);
-
+        logger(test.pattern);
         let frontPattern = test.pattern.substring(
           0,
           test.pattern.indexOf("%word%")
@@ -105,10 +105,6 @@ export default function discern(doc, term, match) {
 
             if (selection.match(frontPattern).found) {
               result += score(test.type);
-              // console\.log.*
-              // console\.log.*
-              // console\.log.*
-              // console\.log.*
             }
             break;
           case 2:
@@ -117,28 +113,27 @@ export default function discern(doc, term, match) {
 
             if (selection.match(backPattern).found) {
               result += score(test.type);
-              // console\.log.*
-              // console\.log.*
-              // console\.log.*
-              // console\.log.*
             }
             break;
           case 3:
             length = wordsInPattern(frontPattern);
             selection = chunk.match(chunk.match(match).previous(length));
-            // // console\.log.*
             selection = selection.union(match);
-            // // console\.log.*
             length = wordsInPattern(backPattern);
             selection = selection.union(
               chunk.match(chunk.match(match).next(length))
             );
-            // // console\.log.*
+
+            if (selection.match(frontPattern) || selection.match(backPattern)) {
+              result += score(test.type);
+            }
 
             break;
           default:
             break;
         }
+
+        logger(result, "label", "score");
       });
     }
 
@@ -188,7 +183,7 @@ export default function discern(doc, term, match) {
   // Main
 
   const word = term.word;
-  // console\.log.*
+
   if (!match.has("#Resolved")) {
     const POSes = term.POSes.map((pos) => classifications(pos));
 
@@ -200,7 +195,7 @@ export default function discern(doc, term, match) {
     Object.values(POSes).forEach((pos) => {
       results[pos] = isClassification(word, pos, match);
     });
-    // console\.log.*
+
     const winner = discernResults(results);
 
     if (winner.length > 1) {
