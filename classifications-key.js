@@ -2,8 +2,6 @@ import * as mfs from "./lib/filesystem.js";
 import * as dirs from "./data-file-structure.js";
 import path from "path";
 
-// const classificationNamesFile = path.join(dirs.classifierKeys, "pos-name-table.json");
-// const classificationNames = mfs.loadJSONFile(classificationNamesFile, "array");
 const list = true;
 const classificationNames = mfs.loadJSONDir(dirs.classifierKeys, list);
 
