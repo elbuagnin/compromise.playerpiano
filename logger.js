@@ -15,9 +15,14 @@ export default function logger(output, format = false, label = false) {
       }
     }
 
+    if (outputType === "number") {
+      outputType = "string";
+    }
+
     if (format === false) {
       format = "formatless";
     }
+
     let layout = label ? "label" : "nolabel";
     layout += "#" + format + "#" + outputType;
 
