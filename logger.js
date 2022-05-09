@@ -27,6 +27,10 @@ export default function logger(output, format = false, label = false) {
     layout += "#" + format + "#" + outputType;
 
     switch (layout) {
+      case "label#header#string":
+        label = label.toUpperCase();
+        console.log("\n" + label + ": " + output);
+        break;
       case "label#label#string":
         label = label[0].toUpperCase() + label.substring(1);
         console.log(label + ": " + output);
