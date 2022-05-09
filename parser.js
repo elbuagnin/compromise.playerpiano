@@ -1,7 +1,7 @@
 import * as mfs from "./lib/filesystem.js";
 import * as dirs from "./data-file-structure.js";
 import path from "path";
-import disambiguate from "./disambiguate.js";
+import discern from "./discern.js";
 import tagger from "./tagger.js";
 import process from "./processor.js";
 
@@ -67,7 +67,7 @@ function parseUsingFile(doc, instruction) {
   const parsingSets = mfs.loadJSONFile(filepath, returnType);
   parsingSets.sort((a, b) => a.order - b.order);
 
-  parsingSets.forEach(parsingData => {
+  parsingSets.forEach((parsingData) => {
     parseByMethod(doc, instruction, parsingData);
   });
 }
@@ -82,7 +82,7 @@ function parseUsingDirectory(doc, instruction) {
   const parsingSets = mfs.loadJSONDir(dirpath, list);
   parsingSets.sort((a, b) => a.batch - b.batch || a.order - b.order);
 
-  parsingSets.forEach(parsingData => {
+  parsingSets.forEach((parsingData) => {
     parseByMethod(doc, instruction, parsingData);
   });
 }
@@ -91,10 +91,14 @@ function parseByPattern(doc, action, parsingData) {
   let matches = [];
 
   switch (action) {
-    case "disambiguate":
+    case "discern":
       matches = doc.match(parsingData.pattern);
-      matches.forEach(match => {
-        disambiguate(doc, { word: match, POSes: parsingData.POSes }, match);
+      matches.forEach((match) => {
+        discern(
+          doc,
+          { word: match, classifications: parsingData.classifications },
+          match
+        );
       });
       break;
     case "tag":
@@ -108,10 +112,10 @@ function parseByPattern(doc, action, parsingData) {
 function parseByTerm(doc, action, parsingData) {
   //
   const { term } = parsingData;
-  doc.terms().forEach(entry => {
+  doc.terms().forEach((entry) => {
     const root = entry.text("root");
     if (root === term.word) {
-      disambiguate(doc, term, entry);
+      discern(doc, term, entry);
     }
   });
 }

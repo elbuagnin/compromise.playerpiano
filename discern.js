@@ -1,8 +1,8 @@
 import logger from "./logger.js";
-import classifications from "./classifications-key.js";
+import classificationNameNormalize from "./classifications-key.js";
 import classifyByPatternTests from "./classifier-patterns.js";
 
-export default function disambiguate(doc, term, match) {
+export default function discern(doc, term, match) {
   function compromiseTagged(tag) {
     return "#" + tag.charAt(0).toUpperCase() + tag.slice(1);
   }
@@ -76,7 +76,7 @@ export default function disambiguate(doc, term, match) {
 
       tests.forEach((test) => {
         let chunk = findChunk(test.scope);
-
+        logger(test.pattern);
         let frontPattern = test.pattern.substring(
           0,
           test.pattern.indexOf("%word%")
@@ -105,10 +105,6 @@ export default function disambiguate(doc, term, match) {
 
             if (selection.match(frontPattern).found) {
               result += score(test.type);
-              // console\.log.*
-              // console\.log.*
-              // console\.log.*
-              // console\.log.*
             }
             break;
           case 2:
@@ -117,35 +113,34 @@ export default function disambiguate(doc, term, match) {
 
             if (selection.match(backPattern).found) {
               result += score(test.type);
-              // console\.log.*
-              // console\.log.*
-              // console\.log.*
-              // console\.log.*
             }
             break;
           case 3:
             length = wordsInPattern(frontPattern);
             selection = chunk.match(chunk.match(match).previous(length));
-            // // console\.log.*
             selection = selection.union(match);
-            // // console\.log.*
             length = wordsInPattern(backPattern);
             selection = selection.union(
               chunk.match(chunk.match(match).next(length))
             );
-            // // console\.log.*
+
+            if (selection.match(frontPattern) || selection.match(backPattern)) {
+              result += score(test.type);
+            }
 
             break;
           default:
             break;
         }
+
+        logger(result, "label", "score");
       });
     }
 
     let result = 0;
     const testTypes = ["negative", "improbable", "probable", "positive"];
     const testSet = classifyByPatternTests.filter(
-      (test) => test.pos === classification
+      (test) => test.classification === classification
     );
 
     testTypes.forEach((type) => {
@@ -156,7 +151,7 @@ export default function disambiguate(doc, term, match) {
     return result;
   }
 
-  function disambiguateResults(results) {
+  function discernResults(results) {
     const ties = [];
     const winner = Object.keys(results).reduce((previous, current) => {
       const diff = results[current] - results[previous];
@@ -188,35 +183,37 @@ export default function disambiguate(doc, term, match) {
   // Main
 
   const word = term.word;
-  // console\.log.*
+
   if (!match.has("#Resolved")) {
-    const POSes = term.POSes.map((pos) => classifications(pos));
+    const classifications = term.classifications.map((classification) =>
+      classificationNameNormalize(classification)
+    );
 
     const results = {};
-    Object.values(POSes).forEach((pos) => {
-      results[pos] = 0;
+    Object.values(classifications).forEach((classification) => {
+      results[classification] = 0;
     });
 
-    Object.values(POSes).forEach((pos) => {
-      results[pos] = isClassification(word, pos, match);
+    Object.values(classifications).forEach((classification) => {
+      results[classification] = isClassification(word, classification, match);
     });
-    // console\.log.*
-    const winner = disambiguateResults(results);
+
+    const winner = discernResults(results);
 
     if (winner.length > 1) {
       return;
     } else {
-      const disambiguatedPOS = compromiseTagged(winner[0]);
+      const discernedClassification = compromiseTagged(winner[0]);
 
-      if (match.has(disambiguatedPOS)) {
+      if (match.has(discernedClassification)) {
         match.tag("Resolved");
 
         return;
       } else {
         clearOldTags(match);
-        match.tag(disambiguatedPOS);
+        match.tag(discernedClassification);
         match.tag("Resolved");
-        logger(match, "label", "Disambiguated");
+        logger(match, "label", "discerned");
 
         return;
       }

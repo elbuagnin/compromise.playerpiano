@@ -2,19 +2,24 @@ import * as mfs from "./lib/filesystem.js";
 import * as dirs from "./data-file-structure.js";
 import path from "path";
 
-const posNameTableFile = path.join(dirs.classifierKeys, "pos-name-table.json");
-const posNameTable = mfs.loadJSONFile(posNameTableFile, "array");
+const list = true;
+const classificationNames = mfs.loadJSONDir(dirs.classifierKeys, list);
 
-export default function posNameNormalize(posNameFromData) {
-  const dropCapitalPosNameFromData =
-    posNameFromData[0].toLowerCase() + posNameFromData.slice(1);
+export default function classificationNameNormalize(
+  classificationNameFromData
+) {
+  const dropCapitalClassificationNameFromData =
+    classificationNameFromData[0].toLowerCase() +
+    classificationNameFromData.slice(1);
   let normalizedName = false;
 
-  Object.values(posNameTable).forEach(pos => {
-    if (pos.abbreviation === dropCapitalPosNameFromData) {
-      normalizedName = pos.fullname;
-    } else if (pos.fullname === dropCapitalPosNameFromData) {
-      normalizedName = pos.fullname;
+  Object.values(classificationNames).forEach((classification) => {
+    if (classification.abbreviation === dropCapitalClassificationNameFromData) {
+      normalizedName = classification.fullname;
+    } else if (
+      classification.fullname === dropCapitalClassificationNameFromData
+    ) {
+      normalizedName = classification.fullname;
     }
   });
 

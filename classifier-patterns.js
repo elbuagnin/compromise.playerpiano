@@ -1,8 +1,6 @@
 import * as mfs from "./lib/filesystem.js";
 import * as dirs from "./data-file-structure.js";
-import path from "path";
 
-const posTestsPath = path.join(dirs.classifierPatterns, "pos-tests");
-const posTests = mfs.loadJSONDir(posTestsPath, true);
+const classificationTests = mfs.loadJSONDir(dirs.classifierPatterns, true);
 
-export default posTests;
+export default classificationTests;
