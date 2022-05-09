@@ -67,7 +67,7 @@ function parseUsingFile(doc, instruction) {
   const parsingSets = mfs.loadJSONFile(filepath, returnType);
   parsingSets.sort((a, b) => a.order - b.order);
 
-  parsingSets.forEach(parsingData => {
+  parsingSets.forEach((parsingData) => {
     parseByMethod(doc, instruction, parsingData);
   });
 }
@@ -82,7 +82,7 @@ function parseUsingDirectory(doc, instruction) {
   const parsingSets = mfs.loadJSONDir(dirpath, list);
   parsingSets.sort((a, b) => a.batch - b.batch || a.order - b.order);
 
-  parsingSets.forEach(parsingData => {
+  parsingSets.forEach((parsingData) => {
     parseByMethod(doc, instruction, parsingData);
   });
 }
@@ -93,8 +93,12 @@ function parseByPattern(doc, action, parsingData) {
   switch (action) {
     case "discern":
       matches = doc.match(parsingData.pattern);
-      matches.forEach(match => {
-        discern(doc, { word: match, POSes: parsingData.POSes }, match);
+      matches.forEach((match) => {
+        discern(
+          doc,
+          { word: match, classifications: parsingData.classifications },
+          match
+        );
       });
       break;
     case "tag":
@@ -108,7 +112,7 @@ function parseByPattern(doc, action, parsingData) {
 function parseByTerm(doc, action, parsingData) {
   //
   const { term } = parsingData;
-  doc.terms().forEach(entry => {
+  doc.terms().forEach((entry) => {
     const root = entry.text("root");
     if (root === term.word) {
       discern(doc, term, entry);

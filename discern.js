@@ -1,5 +1,5 @@
 import logger from "./logger.js";
-import classifications from "./classifications-key.js";
+import classificationNameNormalize from "./classifications-key.js";
 import classifyByPatternTests from "./classifier-patterns.js";
 
 export default function discern(doc, term, match) {
@@ -140,7 +140,7 @@ export default function discern(doc, term, match) {
     let result = 0;
     const testTypes = ["negative", "improbable", "probable", "positive"];
     const testSet = classifyByPatternTests.filter(
-      (test) => test.pos === classification
+      (test) => test.classification === classification
     );
 
     testTypes.forEach((type) => {
@@ -185,15 +185,17 @@ export default function discern(doc, term, match) {
   const word = term.word;
 
   if (!match.has("#Resolved")) {
-    const POSes = term.POSes.map((pos) => classifications(pos));
+    const classifications = term.classifications.map((classification) =>
+      classificationNameNormalize(classification)
+    );
 
     const results = {};
-    Object.values(POSes).forEach((pos) => {
-      results[pos] = 0;
+    Object.values(classifications).forEach((classification) => {
+      results[classification] = 0;
     });
 
-    Object.values(POSes).forEach((pos) => {
-      results[pos] = isClassification(word, pos, match);
+    Object.values(classifications).forEach((classification) => {
+      results[classification] = isClassification(word, classification, match);
     });
 
     const winner = discernResults(results);
