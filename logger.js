@@ -22,6 +22,10 @@ export default function logger(output, format = false, label = false) {
     layout += "#" + format + "#" + outputType;
 
     switch (layout) {
+      case "label#label#string":
+        label = label[0].toUpperCase() + label.substring(1);
+        console.log(label + ": " + output);
+        break;
       case "nolabel#title#string":
         banner = banner.padStart(output.length, "*");
         output = output.toUpperCase();
@@ -40,6 +44,7 @@ export default function logger(output, format = false, label = false) {
         break;
       case "nolabel#formatless#string":
         console.log(output);
+        break;
       case "label#title#object":
         banner = banner.padStart(label.length, "*");
         label = label.toUpperCase();
@@ -60,6 +65,7 @@ export default function logger(output, format = false, label = false) {
         console.log(output);
         break;
       case "label#label#object":
+        console.log("label label object");
         label = label[0].toUpperCase() + label.substring(1);
         console.log(label + output);
         break;
