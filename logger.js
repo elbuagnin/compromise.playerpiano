@@ -74,7 +74,6 @@ export default function logger(output, format = false, label = false) {
         console.log(output);
         break;
       case "label#label#object":
-        console.log("label label object");
         label = label[0].toUpperCase() + label.substring(1);
         console.log(label + output);
         break;
