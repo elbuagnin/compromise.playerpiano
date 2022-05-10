@@ -18,8 +18,8 @@ export default function discern(doc, term, match) {
     });
 
     console.log(typeof filteredTags);
-    logger("Removing Old Tags", "header");
-    logger(filteredTags, "label", "Untagging");
+    logger("details", "Removing Old Tags", "header");
+    logger("details", filteredTags, "label", "Untagging");
     docWord.unTag(filteredTags);
   }
 
@@ -67,7 +67,7 @@ export default function discern(doc, term, match) {
 
       tests.forEach((test) => {
         let chunk = findChunk(test.scope);
-        logger(test.pattern);
+        logger("details", test.pattern);
         let frontPattern = test.pattern.substring(
           0,
           test.pattern.indexOf("%word%")
@@ -124,7 +124,7 @@ export default function discern(doc, term, match) {
             break;
         }
 
-        logger(result, "label", "score");
+        logger("details", result, "label", "score");
       });
     }
 
@@ -204,7 +204,7 @@ export default function discern(doc, term, match) {
         clearOldTags(match);
         match.tag(discernedClassification);
         match.tag("Resolved");
-        logger(match, "label", "discerned");
+        logger("workers", match, "label", "discerned");
 
         return;
       }

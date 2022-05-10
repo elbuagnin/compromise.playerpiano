@@ -89,6 +89,6 @@ export default function process(doc, parsingData) {
 
   // Send debugging output if there is a change in the doc.
   if (equivalentDocs(before, after) === false) {
-    logger(doc, "header", "Processed: " + process);
+    logger("workers", doc, "header", "Processed: " + process);
   }
 }
