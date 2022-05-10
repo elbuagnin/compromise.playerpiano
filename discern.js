@@ -1,6 +1,7 @@
 import logger from "./logger.js";
 import classificationNameNormalize from "./classifications-key.js";
 import classifyByPatternTests from "./classifier-patterns.js";
+import tagExceptions from "./data-interface/remove-old-tag-exceptions-list.js";
 
 export default function discern(doc, term, match) {
   function compromiseTagged(tag) {
@@ -8,18 +9,18 @@ export default function discern(doc, term, match) {
   }
 
   function clearOldTags(docWord) {
-    const tagExceptions = [
-      "Period",
-      "Comma",
-      "ListItem",
-      "QuestionMark",
-      "ExclamationPoint",
-      "Semicolon",
-      "OpenParentheses",
-      "CloseParentheses",
-      "OpenQuote",
-      "CloseQuote",
-    ];
+    // const tagExceptions = [
+    //   "Period",
+    //   "Comma",
+    //   "ListItem",
+    //   "QuestionMark",
+    //   "ExclamationPoint",
+    //   "Semicolon",
+    //   "OpenParentheses",
+    //   "CloseParentheses",
+    //   "OpenQuote",
+    //   "CloseQuote",
+    // ];
 
     const oldTags = Object.values(docWord.out("tags")[0])[0];
 
@@ -29,6 +30,9 @@ export default function discern(doc, term, match) {
       }
     });
 
+    console.log(typeof filteredTags);
+    logger("Removing Old Tags", "header");
+    logger(filteredTags, "label", "Untagging");
     docWord.unTag(filteredTags);
   }
 
