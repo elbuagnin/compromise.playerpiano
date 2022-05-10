@@ -1,7 +1,7 @@
-import logger from "./lib/logger.js";
-import classificationNameNormalize from "./data-interface/classifications-key.js";
-import classifyByPatternTests from "./data-interface/classifier-patterns.js";
-import tagExceptions from "./data-interface/remove-old-tag-exceptions-list.js";
+import logger from "../lib/logger.js";
+import classificationNameNormalize from "../data-interface/classifications-key.js";
+import classifyByPatternTests from "../data-interface/classifier-patterns.js";
+import tagExceptions from "../data-interface/remove-old-tag-exceptions-list.js";
 
 export default function discern(doc, term, match) {
   function compromiseTagged(tag) {

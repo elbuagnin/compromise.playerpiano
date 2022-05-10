@@ -1,8 +1,8 @@
 import path from "path";
-import logger from "./lib/logger.js";
-import * as mfs from "./lib/filesystem.js";
-import * as dirs from "./data-interface/data-file-structure.js";
-import sequence from "./data-interface/sequence.js";
+import logger from "../lib/logger.js";
+import * as mfs from "../lib/filesystem.js";
+import * as dirs from "../data-interface/data-file-structure.js";
+import sequence from "../data-interface/sequence.js";
 import parse from "./parser.js";
 
 export default function sequencer(document) {

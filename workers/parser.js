@@ -1,5 +1,5 @@
-import * as mfs from "./lib/filesystem.js";
-import * as dirs from "./data-interface/data-file-structure.js";
+import * as mfs from "../lib/filesystem.js";
+import * as dirs from "../data-interface/data-file-structure.js";
 import path from "path";
 import discern from "./discern.js";
 import tagger from "./tagger.js";

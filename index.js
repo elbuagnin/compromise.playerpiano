@@ -1,6 +1,6 @@
 import { setOptions } from "./config.js";
 import initialize from "./initialize.js";
-import sequencer from "./sequencer.js";
+import sequencer from "./workers/sequencer.js";
 
 const pianoplayer = {
   api: (View) => {
