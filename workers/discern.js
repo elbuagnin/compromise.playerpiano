@@ -4,7 +4,7 @@ import classifyByPatternTests from "../data-interface/classifier-patterns.js";
 import tagExceptions from "../data-interface/remove-old-tag-exceptions-list.js";
 
 export default function discern(doc, term, match) {
-  function compromiseTagged(tag) {
+  function compromiseTagFormat(tag) {
     return "#" + tag.charAt(0).toUpperCase() + tag.slice(1);
   }
 
@@ -17,9 +17,9 @@ export default function discern(doc, term, match) {
       }
     });
 
-    console.log(typeof filteredTags);
     devLogger("details", "Removing Old Tags", "header");
     devLogger("details", filteredTags, "label", "Untagging");
+
     docWord.unTag(filteredTags);
   }
 
@@ -194,7 +194,7 @@ export default function discern(doc, term, match) {
     if (winner.length > 1) {
       return;
     } else {
-      const discernedClassification = compromiseTagged(winner[0]);
+      const discernedClassification = compromiseTagFormat(winner[0]);
 
       if (match.has(discernedClassification)) {
         match.tag("Resolved");
