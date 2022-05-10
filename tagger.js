@@ -1,4 +1,4 @@
-import logger from "./logger.js";
+import logger from "./lib/logger.js";
 
 export default function tagger(doc, payload) {
   const { pattern, term, tag, untag, discern } = payload;

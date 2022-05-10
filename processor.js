@@ -1,6 +1,6 @@
 import path from "path";
 import deasync from "deasync";
-import logger from "./logger.js";
+import logger from "./lib/logger.js";
 import * as dirs from "./data-interface/data-file-structure.js";
 import * as helpers from "./lib/word-helpers.js";
 
