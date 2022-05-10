@@ -1,4 +1,4 @@
-import logger from "../lib/logger.js";
+import devLogger from "../lib/dev-logger.js";
 import classificationNameNormalize from "../data-interface/classifications-key.js";
 import classifyByPatternTests from "../data-interface/classifier-patterns.js";
 import tagExceptions from "../data-interface/remove-old-tag-exceptions-list.js";
@@ -18,8 +18,8 @@ export default function discern(doc, term, match) {
     });
 
     console.log(typeof filteredTags);
-    logger("details", "Removing Old Tags", "header");
-    logger("details", filteredTags, "label", "Untagging");
+    devLogger("details", "Removing Old Tags", "header");
+    devLogger("details", filteredTags, "label", "Untagging");
     docWord.unTag(filteredTags);
   }
 
@@ -67,7 +67,7 @@ export default function discern(doc, term, match) {
 
       tests.forEach((test) => {
         let chunk = findChunk(test.scope);
-        logger("details", test.pattern);
+        devLogger("details", test.pattern);
         let frontPattern = test.pattern.substring(
           0,
           test.pattern.indexOf("%word%")
@@ -124,7 +124,7 @@ export default function discern(doc, term, match) {
             break;
         }
 
-        logger("details", result, "label", "score");
+        devLogger("details", result, "label", "score");
       });
     }
 
@@ -204,7 +204,7 @@ export default function discern(doc, term, match) {
         clearOldTags(match);
         match.tag(discernedClassification);
         match.tag("Resolved");
-        logger("workers", match, "label", "discerned");
+        devLogger("workers", match, "label", "discerned");
 
         return;
       }

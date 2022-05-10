@@ -1,5 +1,5 @@
 import path from "path";
-import logger from "../lib/logger.js";
+import devLogger from "../lib/dev-logger.js";
 import * as mfs from "../lib/filesystem.js";
 import * as dirs from "../data-interface/data-file-structure.js";
 import sequence from "../data-interface/sequence.js";
@@ -46,7 +46,7 @@ export default function sequencer(document) {
     const subSequence = mfs.loadJSONFile(filepath, returnType);
     subSequence.sort((a, b) => a.order - b.order);
     subSequence.forEach((subInstruction) => {
-      logger(
+      devLogger(
         "instructions",
         subInstruction,
         "subtitle",
@@ -62,7 +62,7 @@ export default function sequencer(document) {
   sequence.sort((a, b) => a.order - b.order);
 
   sequence.forEach((instruction, key) => {
-    logger("instructions", instruction, "title", "instruction");
+    devLogger("instructions", instruction, "title", "instruction");
     if (instruction.action === "sub-sequence") {
       subSequencer(instruction.payload.file);
     } else {

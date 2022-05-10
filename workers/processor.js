@@ -1,6 +1,6 @@
 import path from "path";
 import deasync from "deasync";
-import logger from "../lib/logger.js";
+import devLogger from "../lib/dev-logger.js";
 import * as dirs from "../data-interface/data-file-structure.js";
 import * as helpers from "../lib/word-helpers.js";
 
@@ -89,6 +89,6 @@ export default function process(doc, parsingData) {
 
   // Send debugging output if there is a change in the doc.
   if (equivalentDocs(before, after) === false) {
-    logger("workers", doc, "header", "Processed: " + process);
+    devLogger("workers", doc, "header", "Processed: " + process);
   }
 }
