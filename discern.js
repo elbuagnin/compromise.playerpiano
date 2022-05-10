@@ -9,19 +9,6 @@ export default function discern(doc, term, match) {
   }
 
   function clearOldTags(docWord) {
-    // const tagExceptions = [
-    //   "Period",
-    //   "Comma",
-    //   "ListItem",
-    //   "QuestionMark",
-    //   "ExclamationPoint",
-    //   "Semicolon",
-    //   "OpenParentheses",
-    //   "CloseParentheses",
-    //   "OpenQuote",
-    //   "CloseQuote",
-    // ];
-
     const oldTags = Object.values(docWord.out("tags")[0])[0];
 
     const filteredTags = oldTags.filter((tag) => {
