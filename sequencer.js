@@ -1,8 +1,8 @@
 import path from "path";
 import logger from "./logger.js";
 import * as mfs from "./lib/filesystem.js";
-import * as dirs from "./data-file-structure.js";
-import sequence from "./sequence.js";
+import * as dirs from "./data-interface/data-file-structure.js";
+import sequence from "./data-interface/sequence.js";
 import parse from "./parser.js";
 
 export default function sequencer(document) {
@@ -24,7 +24,7 @@ export default function sequencer(document) {
             const phraseBreaks = sentence.match("#PhraseBreak");
             phraseBreaks.forEach((phraseBreak) => {
               if (
-                phraseBreak.ifNo("(#ListItem|#CoordinatingAdjectives)").found
+                phraseBreak.ifNo("(#ListItem|#CoordinatingAdjectives)").found // Todo Is this still necessary?
               ) {
                 chunks = chunks.splitAfter(phraseBreak);
               }

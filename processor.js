@@ -1,7 +1,7 @@
 import path from "path";
 import deasync from "deasync";
 import logger from "./logger.js";
-import * as dirs from "./data-file-structure.js";
+import * as dirs from "./data-interface/data-file-structure.js";
 import * as helpers from "./lib/word-helpers.js";
 
 // Run custom imported functions from calling module.

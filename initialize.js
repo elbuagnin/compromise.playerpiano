@@ -1,7 +1,7 @@
 import nlp from "compromise";
 import * as extend from "./lib/compromise-extensions.js";
 import * as mfs from "./lib/filesystem.js";
-import * as dirs from "./data-file-structure.js";
+import * as dirs from "./data-interface/data-file-structure.js";
 
 export default function initialize() {
   const tags = mfs.loadJSONDir(dirs.tags, "tags");

@@ -1,6 +1,6 @@
 import logger from "./logger.js";
-import classificationNameNormalize from "./classifications-key.js";
-import classifyByPatternTests from "./classifier-patterns.js";
+import classificationNameNormalize from "./data-interface/classifications-key.js";
+import classifyByPatternTests from "./data-interface/classifier-patterns.js";
 import tagExceptions from "./data-interface/remove-old-tag-exceptions-list.js";
 
 export default function discern(doc, term, match) {
