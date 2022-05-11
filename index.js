@@ -9,7 +9,7 @@ const playerpiano = {
     View.prototype.sequence = function () {
       function snapshot(doc, format = "formatless", message = "") {
         if (pianoOptions.verbose !== "none") {
-          devLogger("changes", doc, format, message);
+          devLogger("results", doc, format, message);
           return surfaceCopy(doc);
         } else {
           return false;
