@@ -1,4 +1,4 @@
-export let pianoOptions = { verbose: "none", tagging: "normal" };
+export let pianoOptions = { verbose: "none" };
 
 export function setOptions() {
   const optionList = arguments[0][0];
@@ -29,9 +29,6 @@ export function setOptions() {
       switch (option) {
         case "verbose":
           pianoOptions.verbose = settings[key];
-          break;
-        case "tagging":
-          pianoOptions.tagging = settings[key];
           break;
         default:
           break;
