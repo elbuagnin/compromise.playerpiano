@@ -1,5 +1,5 @@
 {
-  "name": "compromise.pianoplayer",
+  "name": "compromise.playerpiano",
   "version": "1.0.0-beta1",
   "description": "A sequencer to automate parsing text using the NLP module, Compromise.",
   "main": "index.js",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/elbuagnin/compromise.pianoplayer.git"
+    "url": "git+https://github.com/elbuagnin/compromise.playerpiano.git"
   },
   "keywords": [
     "compromise",
@@ -24,9 +24,9 @@
   "author": "Charles Fewlass Jr",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/elbuagnin/compromise.pianoplayer/issues"
+    "url": "https://github.com/elbuagnin/compromise.playerpiano/issues"
   },
-  "homepage": "https://github.com/elbuagnin/compromise.pianoplayer#readme",
+  "homepage": "https://github.com/elbuagnin/compromise.playerpiano#readme",
   "dependencies": {
     "deasync": "^0.1.26"
   }

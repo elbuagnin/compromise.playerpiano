@@ -4,7 +4,7 @@ import { surfaceCopy, equivalentDocs } from "./lib/doc-helpers.js";
 import initialize from "./initialize.js";
 import sequencer from "./workers/sequencer.js";
 
-const pianoplayer = {
+const playerpiano = {
   api: (View) => {
     View.prototype.sequence = function () {
       function snapshot(doc, format = "formatless", message = "") {
@@ -36,4 +36,4 @@ const pianoplayer = {
   },
 };
 
-export default pianoplayer;
+export default playerpiano;
