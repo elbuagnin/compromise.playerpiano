@@ -27,7 +27,7 @@ const playerpiano = {
 
       if (entryDoc !== false && exitDoc !== false) {
         if (!equivalentDocs(entryDoc, exitDoc)) {
-          devLogger("changes", "There are changes to the Document.", "header");
+          devLogger("results", "There are changes to the Document.", "header");
         }
       }
 
