@@ -1,4 +1,4 @@
-# compromise.pianoplayer
+# compromise.playerpiano
 
 A sequencer to automate parsing text using the NLP module, Compromise.
 
