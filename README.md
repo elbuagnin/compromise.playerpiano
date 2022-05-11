@@ -1,4 +1,5 @@
 # compromise.playerpiano
+
 ## Beta Release
 
 A sequencer to automate parsing text using the NLP module, Compromise.
@@ -11,21 +12,27 @@ and perform tagging. The end result is like some gigantic function, created by
 the user to manipulate and transform tagging on documents.
 
 ## Use Cases
-* Run additional post-processing on Compromise
-* Explore and tag parts of speech in more detail
-* Tag terms for specialized fields (science, business,etc)
-* Analyze writings
-* prepare input for computer games
-* and so forth ...
+
+- Run additional post-processing on Compromise
+- Explore and tag parts of speech in more detail
+- Tag terms for specialized fields (science, business,etc)
+- Analyze writings
+- prepare input for computer games
+- and so forth ...
 
 ## Set Up
+
 #### Install into your Node.js module
+
 ```
 npm install spencermountain/compromise
 npm install elbuagnin/compromise.playerpiano
 ```
+
 #### Call it from your code
+
 ##### Example
+
 ```
 import http from "http";
 import { readFile } from "fs";
@@ -37,11 +44,11 @@ function test() {
     if (err) {
       throw new Error(err);
     }
-    
+
     nlp.plugin(pianoplayer);
     const doc = nlp(data);
     doc.sequence();
-    
+
     doc.debug();
   });
 }
@@ -56,5 +63,7 @@ const server = http.createServer(requestListener);
 server.listen(8080);
 
 ```
+
 ## Documentation
+
 [compromise.playerpiano documentation](https://github.com/elbuagnin/compromise.playerpiano/wiki)
