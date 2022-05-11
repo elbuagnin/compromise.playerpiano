@@ -37,6 +37,6 @@ export default function process(doc, parsingData) {
 
   // Send debugging output if there is a change in the doc.
   if (docHelpers.equivalentDocs(before, after) === false) {
-    devLogger("workers", doc, "header", "Processed: " + process);
+    devLogger("changes", doc, "header", "Processed: " + process);
   }
 }

@@ -12,21 +12,21 @@ export default function tagger(doc, payload) {
     ) {
       if (discern === true) {
         const oldTags = Object.values(matchedTerm.out("tags")[0])[0];
-        devLogger("workers", "Removing previous tags", "header");
+        devLogger("changes", "Removing previous tags", "header");
         matchedTerm.unTag(oldTags);
         matchedTerm.tag("Resolved");
       }
       if (untag) {
-        devLogger("workers", "Un-Tagging", "header");
-        devLogger("workers", untag, "label", "untagged");
+        devLogger("changes", "Un-Tagging", "header");
+        devLogger("changes", untag, "label", "untagged");
         matchedTerm.unTag(untag);
-        devLogger("workers", matchedTerm, "label", "matched term[s]");
+        devLogger("changes", matchedTerm, "label", "matched term[s]");
       }
       if (tag) {
-        devLogger("workers", "Tagging", "header");
-        devLogger("workers", tag, "label", "tag");
+        devLogger("changes", "Tagging", "header");
+        devLogger("changes", tag, "label", "tag");
         matchedTerm.tag(tag);
-        devLogger("workers", matchedTerm, "label", "matched term[s]");
+        devLogger("changes", matchedTerm, "label", "matched term[s]");
       }
     }
   }

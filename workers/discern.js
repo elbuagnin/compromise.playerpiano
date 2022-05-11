@@ -204,7 +204,7 @@ export default function discern(doc, term, match) {
         clearOldTags(match);
         match.tag(discernedClassification);
         match.tag("Resolved");
-        devLogger("workers", match, "label", "discerned");
+        devLogger("changes", match, "label", "discerned");
 
         return;
       }
