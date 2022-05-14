@@ -182,7 +182,7 @@ export default function discern(doc, term, match) {
   // Main
 
   const word = term.word;
-  devLogger("workers", word, "header", "term");
+  devLogger("workers", word, "subtitle", "term");
 
   if (!match.has("#Resolved")) {
     const classifications = term.classifications.map((classification) =>
@@ -205,6 +205,7 @@ export default function discern(doc, term, match) {
     } else {
       const discernedClassification = compromiseTagFormat(winner[0]);
       devLogger("changes", match, "header", discernedClassification);
+
       if (match.has(discernedClassification)) {
         match.tag("Resolved");
 
