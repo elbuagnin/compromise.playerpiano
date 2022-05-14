@@ -174,6 +174,7 @@ export default function discern(doc, term, match) {
   // Main
 
   const word = term.word;
+  devLogger("workers", word, "label", "term");
 
   if (!match.has("#Resolved")) {
     const classifications = term.classifications.map((classification) =>
