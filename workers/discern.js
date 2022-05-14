@@ -66,7 +66,12 @@ export default function discern(doc, term, match) {
       }
 
       // isClassification main
-      devLogger("workers", classification, "label", "classification");
+      devLogger(
+        "workers",
+        classification,
+        "header",
+        "Testing for Classification"
+      );
 
       tests.forEach((test) => {
         let chunk = findChunk(test.scope);
@@ -199,7 +204,7 @@ export default function discern(doc, term, match) {
       return;
     } else {
       const discernedClassification = compromiseTagFormat(winner[0]);
-
+      devLogger("changes", match, "header", discernedClassification);
       if (match.has(discernedClassification)) {
         match.tag("Resolved");
 
@@ -208,7 +213,6 @@ export default function discern(doc, term, match) {
         clearOldTags(match);
         match.tag(discernedClassification);
         match.tag("Resolved");
-        devLogger("changes", match, "label", "discerned");
 
         return;
       }
