@@ -29,6 +29,37 @@ npm install spencermountain/compromise
 npm install elbuagnin/compromise.playerpiano
 ```
 
+#### Create a directory structure for the sequences (see [Wiki](https://github.com/elbuagnin/compromise.playerpiano/wiki)).
+```
+[+] sequencing-data
+ --- [+] classifiers
+ --- [+] doc-processors
+ --- [+] sub-sequences
+```
+##### etc.
+
+#### Create the instruction sequences (see [Wiki](https://github.com/elbuagnin/compromise.playerpiano/wiki)).
+##### Example
+```
+"Initial Document Pattern Tagging": {
+    "order": "2",
+    "action": "tag",
+    "parseBy": "pattern",
+    "scope": "document",
+    "source": "directory",
+    "payload": { "directory": "pre-processing" }
+  },
+
+  "Compound Terms": {
+    "order": "3",
+    "action": "tag",
+    "parseBy": "pattern",
+    "scope": "document",
+    "source": "directory",
+    "payload": { "directory": "compound-terms" }
+  },
+  ```
+##### etc.
 #### Call it from your code
 
 ##### Example
