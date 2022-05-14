@@ -101,6 +101,7 @@ export default function discern(doc, term, match) {
           case 1:
             length = wordsInPattern(frontPattern);
             selection = chunk.match(chunk.match(match).previous(length));
+            console.log("<<<<<< Looking for pattern: " + frontPattern);
             console.log(">>>>>> Looking at this: " + selection.text());
             if (selection.match(frontPattern).found) {
               result += score(test.type);
@@ -109,6 +110,7 @@ export default function discern(doc, term, match) {
           case 2:
             length = wordsInPattern(backPattern);
             selection = chunk.match(chunk.match(match).next(length));
+            console.log("<<<<<< Looking for pattern: " + backPattern);
             console.log(">>>>>> Looking at this: " + selection.text());
             if (selection.match(backPattern).found) {
               result += score(test.type);
@@ -122,6 +124,8 @@ export default function discern(doc, term, match) {
             selection = selection.union(
               chunk.match(chunk.match(match).next(length))
             );
+            console.log("<<<<<< Looking for pattern: " + frontPattern);
+            console.log("<<<<<< and this pattern: " + backPattern);
             console.log(">>>>>> Looking at this: " + selection.text());
             if (selection.match(frontPattern) || selection.match(backPattern)) {
               result += score(test.type);
