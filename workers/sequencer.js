@@ -63,11 +63,13 @@ export default function sequencer(document) {
 
   sequence.forEach((instruction, key) => {
     devLogger("instructions", instruction, "title", "instruction");
+
     if (instruction.action === "sub-sequence") {
       subSequencer(instruction.payload.file);
     } else {
       execute(instruction);
     }
+
+    devLogger("changes", document, "label", "post-instruction");
   });
-  // console\.log.*
 }
