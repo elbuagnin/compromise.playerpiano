@@ -96,27 +96,28 @@ export default function discern(doc, term, match) {
 
         let length = 0;
         let selection = "";
+        let wholePattern = "";
 
         switch (patternType) {
           case 1:
             length = wordsInPattern(frontPattern);
-            frontPattern = [frontPattern, match.text()].join(" ");
+            wholePattern = [frontPattern, match.text()].join(" ");
             selection = chunk.match(chunk.match(match).previous(length));
             selection = selection.union(match);
             console.log("<<<<<< Looking for pattern: " + frontPattern);
             console.log(">>>>>> Looking at this: " + selection.text());
-            if (selection.match(frontPattern).found) {
+            if (selection.match(wholePattern).found) {
               result += score(test.type);
             }
             break;
           case 2:
             length = wordsInPattern(backPattern);
-            backPattern = [match.text(), backPattern].join(" ");
+            wholePattern = [match.text(), backPattern].join(" ");
             selection = chunk.match(chunk.match(match).next(length));
             selection = match.union(selection);
             console.log("<<<<<< Looking for pattern: " + backPattern);
             console.log(">>>>>> Looking at this: " + selection.text());
-            if (selection.match(backPattern).found) {
+            if (selection.match(wholePattern).found) {
               result += score(test.type);
             }
             break;
@@ -129,9 +130,7 @@ export default function discern(doc, term, match) {
               chunk.match(chunk.match(match).next(length))
             );
 
-            const wholePattern = [frontPattern, match.text(), backPattern].join(
-              " "
-            );
+            wholePattern = [frontPattern, match.text(), backPattern].join(" ");
             // console.log("<<<<<< Looking for pattern: " + frontPattern);
             // console.log("<<<<<< and this pattern: " + backPattern);
             console.log("$$$$$$ Looking for: " + wholePattern);
