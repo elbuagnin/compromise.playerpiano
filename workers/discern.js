@@ -65,6 +65,9 @@ export default function discern(doc, term, match) {
         return count;
       }
 
+      // isClassification main
+      devLogger("workers", classification, "label", "classification");
+
       tests.forEach((test) => {
         let chunk = findChunk(test.scope);
         devLogger("details", test.pattern);
@@ -174,7 +177,7 @@ export default function discern(doc, term, match) {
   // Main
 
   const word = term.word;
-  devLogger("workers", word, "label", "term");
+  devLogger("workers", word, "header", "term");
 
   if (!match.has("#Resolved")) {
     const classifications = term.classifications.map((classification) =>
