@@ -101,7 +101,7 @@ export default function discern(doc, term, match) {
         switch (patternType) {
           case 1:
             length = wordsInPattern(frontPattern);
-            wholePattern = [frontPattern, match.text()].join(" ");
+            wholePattern = [frontPattern, word].join(" ");
             selection = chunk.match(chunk.match(match).previous(length));
             selection = selection.union(match);
             console.log("$$$$$$ Looking for: " + wholePattern);
@@ -112,7 +112,7 @@ export default function discern(doc, term, match) {
             break;
           case 2:
             length = wordsInPattern(backPattern);
-            wholePattern = [match.text(), backPattern].join(" ");
+            wholePattern = [word, backPattern].join(" ");
             selection = chunk.match(chunk.match(match).next(length));
             selection = match.union(selection);
             console.log("$$$$$$ Looking for: " + wholePattern);
@@ -130,7 +130,7 @@ export default function discern(doc, term, match) {
               chunk.match(chunk.match(match).next(length))
             );
 
-            wholePattern = [frontPattern, match.text(), backPattern].join(" ");
+            wholePattern = [frontPattern, word, backPattern].join(" ");
             // console.log("<<<<<< Looking for pattern: " + frontPattern);
             // console.log("<<<<<< and this pattern: " + backPattern);
             console.log("$$$$$$ Looking for: " + wholePattern);
