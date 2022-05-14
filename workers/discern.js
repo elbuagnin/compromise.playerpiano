@@ -104,7 +104,7 @@ export default function discern(doc, term, match) {
             wholePattern = [frontPattern, match.text()].join(" ");
             selection = chunk.match(chunk.match(match).previous(length));
             selection = selection.union(match);
-            console.log("<<<<<< Looking for pattern: " + frontPattern);
+            console.log("$$$$$$ Looking for: " + wholePattern);
             console.log(">>>>>> Looking at this: " + selection.text());
             if (selection.match(wholePattern).found) {
               result += score(test.type);
@@ -115,7 +115,7 @@ export default function discern(doc, term, match) {
             wholePattern = [match.text(), backPattern].join(" ");
             selection = chunk.match(chunk.match(match).next(length));
             selection = match.union(selection);
-            console.log("<<<<<< Looking for pattern: " + backPattern);
+            console.log("$$$$$$ Looking for: " + wholePattern);
             console.log(">>>>>> Looking at this: " + selection.text());
             if (selection.match(wholePattern).found) {
               result += score(test.type);
