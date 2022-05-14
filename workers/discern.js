@@ -78,11 +78,11 @@ export default function discern(doc, term, match) {
         devLogger("details", test.pattern);
         let frontPattern = test.pattern.substring(
           0,
-          test.pattern.indexOf("%word%" + 6)
+          test.pattern.indexOf("%word%")
         );
 
         let backPattern = test.pattern.substring(
-          test.pattern.indexOf("%word%")
+          test.pattern.indexOf("%word%" + 6)
         );
 
         let patternType = 0;
@@ -100,6 +100,7 @@ export default function discern(doc, term, match) {
         switch (patternType) {
           case 1:
             length = wordsInPattern(frontPattern);
+            frontPattern = frontPattern.union(match);
             selection = chunk.match(chunk.match(match).previous(length));
             selection = selection.union(match);
             console.log("<<<<<< Looking for pattern: " + frontPattern);
@@ -110,6 +111,7 @@ export default function discern(doc, term, match) {
             break;
           case 2:
             length = wordsInPattern(backPattern);
+            backPattern = match.union(backPattern);
             selection = chunk.match(chunk.match(match).next(length));
             selection = match.union(selection);
             console.log("<<<<<< Looking for pattern: " + backPattern);
@@ -126,13 +128,18 @@ export default function discern(doc, term, match) {
             selection = selection.union(
               chunk.match(chunk.match(match).next(length))
             );
-            console.log("<<<<<< Looking for pattern: " + frontPattern);
-            console.log("<<<<<< and this pattern: " + backPattern);
+
+            const wholePattern = frontPattern.union(match).union(backPattern);
+            // console.log("<<<<<< Looking for pattern: " + frontPattern);
+            // console.log("<<<<<< and this pattern: " + backPattern);
+            console.log("$$$$$$ Looking for: " + wholePattern);
             console.log(">>>>>> Looking at this: " + selection.text());
-            if (selection.match(frontPattern) || selection.match(backPattern)) {
+            // if (selection.match(frontPattern) || selection.match(backPattern)) {
+            //   result += score(test.type);
+            // }
+            if (selection.match(wholePattern)) {
               result += score(test.type);
             }
-
             break;
           default:
             break;
