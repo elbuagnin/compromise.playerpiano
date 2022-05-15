@@ -83,7 +83,7 @@ export default function discern(doc, term, match) {
         if (test.pattern.match(regex)) {
           patternWord = test.pattern.match(regex);
         }
-
+        console.log("patternWord is " + patternWord);
         const frontPattern = test.pattern
           .substring(0, test.pattern.indexOf(patternWord))
           .trim();
