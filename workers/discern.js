@@ -90,7 +90,7 @@ export default function discern(doc, term, match) {
           .trim();
         console.log("frontPattern: " + frontPattern);
         const backPattern = test.pattern
-          .substring(test.pattern.indexOf(patternWord) + patternWord.length)
+          .substring(test.pattern.indexOf(patternWord) + patternWord.length + 1)
           .trim();
         console.log("backPattern: " + backPattern);
         let patternType = 0;
