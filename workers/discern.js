@@ -104,22 +104,12 @@ export default function discern(doc, term, match) {
             wholePattern = [frontPattern].join(" ");
             selection = chunk.match(chunk.match(match).previous(length));
             selection = selection.union(match);
-            console.log("$$$$$$ Looking for: " + wholePattern);
-            console.log(">>>>>> Looking at this: " + selection.text());
-            if (selection.match(wholePattern).found) {
-              result += score(test.type);
-            }
             break;
           case 2:
             length = wordsInPattern(backPattern);
             wholePattern = [word, backPattern].join(" ");
             selection = chunk.match(chunk.match(match).next(length));
             selection = match.union(selection);
-            console.log("$$$$$$ Looking for: " + wholePattern);
-            console.log(">>>>>> Looking at this: " + selection.text());
-            if (selection.match(wholePattern).found) {
-              result += score(test.type);
-            }
             break;
           case 3:
             length = wordsInPattern(frontPattern);
@@ -131,19 +121,17 @@ export default function discern(doc, term, match) {
             );
 
             wholePattern = [frontPattern, word, backPattern].join(" ");
-            // console.log("<<<<<< Looking for pattern: " + frontPattern);
-            // console.log("<<<<<< and this pattern: " + backPattern);
-            console.log("$$$$$$ Looking for: " + wholePattern);
-            console.log(">>>>>> Looking at this: " + selection.text());
-            // if (selection.match(frontPattern) || selection.match(backPattern)) {
-            //   result += score(test.type);
-            // }
-            if (selection.match(wholePattern)) {
-              result += score(test.type);
-            }
+
             break;
           default:
             break;
+        }
+
+        console.log("$$$$$$ Looking for: " + wholePattern);
+        console.log(">>>>>> Looking at this: " + selection.text());
+
+        if (selection.match(wholePattern).found) {
+          result += score(test.type);
         }
 
         devLogger("details", result, "label", "score");
