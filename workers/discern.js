@@ -101,13 +101,13 @@ export default function discern(doc, term, match) {
         switch (patternType) {
           case 1:
             length = wordsInPattern(frontPattern);
-            wholePattern = [frontPattern].join(" ");
+            wholePattern = frontPattern + " " + word;
             selection = chunk.match(chunk.match(match).previous(length));
             selection = selection.union(match);
             break;
           case 2:
             length = wordsInPattern(backPattern);
-            wholePattern = [word, backPattern].join(" ");
+            wholePattern = word + " " + backPattern;
             selection = chunk.match(chunk.match(match).next(length));
             selection = match.union(selection);
             break;
@@ -120,7 +120,7 @@ export default function discern(doc, term, match) {
               chunk.match(chunk.match(match).next(length))
             );
 
-            wholePattern = [frontPattern, word, backPattern].join(" ");
+            wholePattern = frontPattern + " " + word + " " + backPattern;
 
             break;
           default:
