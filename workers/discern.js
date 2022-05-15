@@ -101,7 +101,7 @@ export default function discern(doc, term, match) {
         switch (patternType) {
           case 1:
             length = wordsInPattern(frontPattern);
-            wholePattern = [frontPattern, word].join(" ");
+            wholePattern = [frontPattern].join(" ");
             selection = chunk.match(chunk.match(match).previous(length));
             selection = selection.union(match);
             console.log("$$$$$$ Looking for: " + wholePattern);
