@@ -76,14 +76,13 @@ export default function discern(doc, term, match) {
       tests.forEach((test) => {
         let chunk = findChunk(test.scope);
         devLogger("details", test.pattern);
-        let frontPattern = test.pattern.substring(
+        const frontPattern = test.pattern.substring(
           0,
           test.pattern.indexOf("%word%")
         );
         console.log("frontPattern: " + frontPattern);
-        let backPattern = test.pattern.substring(
-          test.pattern.indexOf("%word%" + 6),
-          test.pattern.length
+        const backPattern = test.pattern.substring(
+          test.pattern.indexOf("%word%") + 6
         );
         console.log("backPattern: " + backPattern);
         let patternType = 0;
