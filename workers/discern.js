@@ -80,11 +80,11 @@ export default function discern(doc, term, match) {
           0,
           test.pattern.indexOf("%word%")
         );
-
+        console.log("frontPattern: " + frontPattern);
         let backPattern = test.pattern.substring(
           test.pattern.indexOf("%word%" + 6)
         );
-
+        console.log("backPattern: " + backPattern);
         let patternType = 0;
 
         if (frontPattern) {
