@@ -133,7 +133,7 @@ export default function discern(doc, term, match) {
         wholePattern = wholePattern.replace("%word%", word);
 
         console.log("Whole Pattern: " + wholePattern);
-        console.log("Selection: " + selection);
+        console.log("Selection: " + selection.text());
 
         if (selection.match(wholePattern)) {
           result += score(test.type);
