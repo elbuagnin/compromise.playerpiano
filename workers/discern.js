@@ -74,7 +74,7 @@ export default function discern(doc, term, match) {
       );
 
       tests.forEach((test) => {
-        devLogger("details", test.pattern);
+        devLogger("details", test.pattern, "label", "  ");
 
         let chunk = findChunk(test.scope);
         let patternWord = "%word%";
@@ -86,15 +86,19 @@ export default function discern(doc, term, match) {
           backTrimAdj = -1;
         }
         console.log("patternWord is " + patternWord);
-        const frontPattern = test.pattern
-          .substring(0, test.pattern.indexOf(patternWord))
-          .trim();
+        const splitPatterns = test.pattern.split(patternWord);
+        const frontPattern = splitPatterns[0];
+        const backPattern = splitPatterns[1];
+
+        // const frontPattern = test.pattern
+        //   .substring(0, test.pattern.indexOf(patternWord))
+        //   .trim();
         console.log("frontPattern: " + frontPattern);
-        const backPattern = test.pattern
-          .substring(
-            test.pattern.indexOf(patternWord) + patternWord.length + backTrimAdj
-          )
-          .trim();
+        // const backPattern = test.pattern
+        //   .substring(
+        //     test.pattern.indexOf(patternWord) + patternWord.length + backTrimAdj
+        //   )
+        //   .trim();
         console.log("backPattern: " + backPattern);
         let patternType = 0;
 
