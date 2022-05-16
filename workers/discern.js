@@ -87,18 +87,11 @@ export default function discern(doc, term, match) {
         }
         console.log("patternWord is " + patternWord);
         const splitPatterns = test.pattern.split(patternWord);
-        const frontPattern = splitPatterns[0];
-        const backPattern = splitPatterns[1];
+        const frontPattern = splitPatterns[0].trim();
+        const backPattern = splitPatterns[1].trim();
 
-        // const frontPattern = test.pattern
-        //   .substring(0, test.pattern.indexOf(patternWord))
-        //   .trim();
         console.log("frontPattern: " + frontPattern);
-        // const backPattern = test.pattern
-        //   .substring(
-        //     test.pattern.indexOf(patternWord) + patternWord.length + backTrimAdj
-        //   )
-        //   .trim();
+
         console.log("backPattern: " + backPattern);
         let patternType = 0;
 
