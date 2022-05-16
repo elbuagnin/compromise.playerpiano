@@ -78,10 +78,12 @@ export default function discern(doc, term, match) {
 
         let chunk = findChunk(test.scope);
         let patternWord = "%word%";
+        let backTrimAdj = 0;
 
         const regex = /\(\s?%word%\s?&&\s?\/?\^?\!?#?(?:\w|-|_)+\$?\/?\s?\)|\(\s?\/?\^?\!?#?(?:\w|-|_)+\$?\/?\s?&&\s?%word%\s?\)/;
         if (test.pattern.match(regex)) {
           patternWord = test.pattern.match(regex);
+          backTrimAdj = -1;
         }
         console.log("patternWord is " + patternWord);
         const frontPattern = test.pattern
@@ -89,7 +91,9 @@ export default function discern(doc, term, match) {
           .trim();
         console.log("frontPattern: " + frontPattern);
         const backPattern = test.pattern
-          .substring(test.pattern.indexOf(patternWord) + patternWord.length - 1)
+          .substring(
+            test.pattern.indexOf(patternWord) + patternWord.length - backTrimAdj
+          )
           .trim();
         console.log("backPattern: " + backPattern);
         let patternType = 0;
