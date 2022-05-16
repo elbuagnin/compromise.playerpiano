@@ -85,14 +85,14 @@ export default function discern(doc, term, match) {
           patternWord = test.pattern.match(regex);
           backTrimAdj = -1;
         }
-        console.log("patternWord is " + patternWord);
+        //console.log("patternWord is " + patternWord);
         const splitPatterns = test.pattern.split(patternWord);
         const frontPattern = splitPatterns[0].trim();
         const backPattern = splitPatterns[1].trim();
 
-        console.log("frontPattern: " + frontPattern);
+        //console.log("frontPattern: " + frontPattern);
 
-        console.log("backPattern: " + backPattern);
+        //console.log("backPattern: " + backPattern);
         let patternType = 0;
 
         if (frontPattern) {
@@ -134,10 +134,10 @@ export default function discern(doc, term, match) {
           default:
             break;
         }
-
+        console.log(length);
         wholePattern = wholePattern.replace("%word%", word);
-        console.log("$$$$$$ Looking for: " + wholePattern);
-        console.log(">>>>>> Looking at this: " + selection.text());
+        //console.log("$$$$$$ Looking for: " + wholePattern);
+        //console.log(">>>>>> Looking at this: " + selection.text());
 
         if (selection.match(wholePattern)) {
           result += score(test.type);
