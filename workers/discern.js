@@ -79,7 +79,7 @@ export default function discern(doc, term, match) {
         let chunk = findChunk(test.scope);
         let patternWord = "%word%";
 
-        const regex = /\(%word%\s?&&\s?\/?!?#?\w+\)|\(\/?!?#?\w+\s?&&\s?%word%\)/;
+        const regex = /\(\s?%word%\s?&&\s?\/?\^?\!?#?(?:\w|-|_)+\$?\/?\s?\)|\(\s?\/?\^?\!?#?(?:\w|-|_)+\$?\/?\s?&&\s?%word%\s?\)/;
         if (test.pattern.match(regex)) {
           patternWord = test.pattern.match(regex);
         }
