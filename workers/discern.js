@@ -112,18 +112,17 @@ export default function discern(doc, term, match) {
         let length = 0;
         let selection = "";
         let wholePattern = "";
-        const populatedPatternWord = patternWord.replace("%word%", word);
 
         switch (patternType) {
           case 1:
             length = wordsInPattern(frontPattern);
-            wholePattern = [frontPattern, populatedPatternWord].join(" "); //frontPattern + " " + word;
+            wholePattern = [frontPattern, patternWord].join(" ");
             selection = chunk.match(chunk.match(match).previous(length));
             selection = selection.union(match);
             break;
           case 2:
             length = wordsInPattern(backPattern);
-            wholePattern = [populatedPatternWord, backPattern].join(" "); //word + " " + backPattern;
+            wholePattern = [patternWord, backPattern].join(" ");
             selection = chunk.match(chunk.match(match).next(length));
             selection = match.union(selection);
             break;
@@ -136,17 +135,14 @@ export default function discern(doc, term, match) {
               chunk.match(chunk.match(match).next(length))
             );
 
-            wholePattern = [
-              frontPattern,
-              populatedPatternWord,
-              backPattern,
-            ].join(" "); //frontPattern + " " + word + " " + backPattern;
+            wholePattern = [frontPattern, patternWord, backPattern].join(" ");
 
             break;
           default:
             break;
         }
 
+        wholePattern = wholePattern.replace("%word%", word);
         console.log("$$$$$$ Looking for: " + wholePattern);
         console.log(">>>>>> Looking at this: " + selection.text());
 
