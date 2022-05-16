@@ -139,7 +139,7 @@ export default function discern(doc, term, match) {
         console.log("$$$$$$ Looking for: " + wholePattern);
         console.log(">>>>>> Looking at this: " + selection.text());
 
-        if (selection.match(wholePattern).found) {
+        if (selection.match(wholePattern)) {
           result += score(test.type);
         }
 
