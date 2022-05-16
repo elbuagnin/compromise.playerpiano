@@ -56,6 +56,7 @@ export default function discern(doc, term, match) {
         let count = 0;
 
         count -= pattern.split(/\(.+&&.+\)/).length - 1;
+        count -= pattern.split(/\|/).length - 1;
         count += pattern.split(/[\w|-|_]+/).length - 1;
         count += pattern.split(/\s\d+\s/).length - 1;
         if (count < 0) {
