@@ -137,7 +137,6 @@ export default function discern(doc, term, match) {
         const selectionMatch = selectionClone.match(wholePattern);
         if (selectionMatch.found) {
           result += score(test.type);
-          console.log(result);
         }
 
         devLogger("details", result, "label", "score");
