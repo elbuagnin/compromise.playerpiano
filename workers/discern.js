@@ -1,4 +1,5 @@
 import devLogger from "../lib/dev-logger.js";
+import nlp from "compromise";
 import classificationNameNormalize from "../data-interface/classifications-key.js";
 import classifyByPatternTests from "../data-interface/classifier-patterns.js";
 import tagExceptions from "../data-interface/remove-old-tag-exceptions-list.js";
@@ -24,6 +25,7 @@ export default function discern(doc, term, match) {
   }
 
   function isClassification(word, classification, match) {
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@ " + typeof word);
     function testing(tests, match) {
       function findChunk(scope) {
         if (scope === "phrase") {
@@ -57,12 +59,14 @@ export default function discern(doc, term, match) {
 
         count -= pattern.split(/\(.+&&.+\)/).length - 1;
         count -= pattern.split(/\|/).length - 1;
-        count += pattern.split(/[\w|-|_]+/).length - 1;
+        count += pattern.split(/[\w|-|_|#|\?|\+]+/).length - 1;
         count += pattern.split(/\s\d+\s/).length - 1;
+
         if (count < 0) {
           count = 0;
         }
 
+        // console.log("total count of words = " + count);
         return count;
       }
 
@@ -75,7 +79,7 @@ export default function discern(doc, term, match) {
       );
 
       tests.forEach((test) => {
-        devLogger("details", test.pattern, "label", "  ");
+        //devLogger("details", "\n" + test.pattern, "label", "  ");
 
         let chunk = findChunk(test.scope);
         let patternWord = "%word%";
@@ -104,25 +108,26 @@ export default function discern(doc, term, match) {
 
         switch (patternType) {
           case 1:
-            length = wordsInPattern(frontPattern);
+            length = wordsInPattern(frontPattern) + 1;
             wholePattern = [frontPattern, patternWord].join(" ");
-            selection = chunk.match(chunk.match(match).previous(length));
-            selection = selection.union(match);
+            // selection = chunk.match(chunk.match(match).previous(length));
+            // selection = selection.union(match).settle();
+            selection = chunk.match(match).previous(length).union(match);
+
             break;
           case 2:
-            length = wordsInPattern(backPattern);
+            length = wordsInPattern(backPattern) + 1;
             wholePattern = [patternWord, backPattern].join(" ");
-            selection = chunk.match(chunk.match(match).next(length));
-            selection = match.union(selection);
+            // selection = chunk.match(chunk.match(match).next(length));
+            // selection = match.union(selection).settle();
+            selection = chunk.match(match).union(match.next(length));
             break;
           case 3:
-            length = wordsInPattern(frontPattern);
-            selection = chunk.match(chunk.match(match).previous(length));
+            length = wordsInPattern(frontPattern) + 1;
+            selection = chunk.match(match).previous(length).union(match);
             selection = selection.union(match);
-            length = wordsInPattern(backPattern);
-            selection = selection.union(
-              chunk.match(chunk.match(match).next(length))
-            );
+            length = wordsInPattern(backPattern) + 1;
+            selection = selection.union(chunk.match(match).next(length));
 
             wholePattern = [frontPattern, patternWord, backPattern].join(" ");
 
@@ -130,16 +135,23 @@ export default function discern(doc, term, match) {
           default:
             break;
         }
-        wholePattern = wholePattern.replace("%word%", word);
-
-        console.log("Whole Pattern: " + wholePattern);
-        console.log("Selection: " + selection.text());
-
-        if (selection.match(wholePattern)) {
+        if (typeof word === "object") {
+          word = word.text();
+        }
+        const selectionClone = nlp(selection.text());
+        wholePattern = wholePattern.replace("%word%", word).trim();
+        // console.log("\nWhole Pattern: " + wholePattern);
+        //console.log("Selection: " + selection.text());
+        // selectionClone.debug();
+        const selectionMatch = selectionClone.match(wholePattern);
+        //console.log("Selection matches: " + selectionMatch.text());
+        // selectionMatch.debug();
+        if (selectionMatch.found) {
           result += score(test.type);
+          console.log(result);
         }
 
-        devLogger("details", result, "label", "score");
+        //devLogger("details", result, "label", "score");
       });
     }
 
