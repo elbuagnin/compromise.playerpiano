@@ -66,7 +66,6 @@ export default function discern(doc, term, match) {
           count = 0;
         }
 
-        // console.log("total count of words = " + count);
         return count;
       }
 
@@ -79,7 +78,7 @@ export default function discern(doc, term, match) {
       );
 
       tests.forEach((test) => {
-        //devLogger("details", "\n" + test.pattern, "label", "  ");
+        devLogger("details", "\n" + test.pattern, "label", "  ");
 
         let chunk = findChunk(test.scope);
         let patternWord = "%word%";
@@ -110,16 +109,12 @@ export default function discern(doc, term, match) {
           case 1:
             length = wordsInPattern(frontPattern) + 1;
             wholePattern = [frontPattern, patternWord].join(" ");
-            // selection = chunk.match(chunk.match(match).previous(length));
-            // selection = selection.union(match).settle();
             selection = chunk.match(match).previous(length).union(match);
 
             break;
           case 2:
             length = wordsInPattern(backPattern) + 1;
             wholePattern = [patternWord, backPattern].join(" ");
-            // selection = chunk.match(chunk.match(match).next(length));
-            // selection = match.union(selection).settle();
             selection = chunk.match(match).union(match.next(length));
             break;
           case 3:
@@ -140,18 +135,13 @@ export default function discern(doc, term, match) {
         }
         const selectionClone = nlp(selection.text());
         wholePattern = wholePattern.replace("%word%", word).trim();
-        // console.log("\nWhole Pattern: " + wholePattern);
-        //console.log("Selection: " + selection.text());
-        // selectionClone.debug();
         const selectionMatch = selectionClone.match(wholePattern);
-        //console.log("Selection matches: " + selectionMatch.text());
-        // selectionMatch.debug();
         if (selectionMatch.found) {
           result += score(test.type);
           console.log(result);
         }
 
-        //devLogger("details", result, "label", "score");
+        devLogger("details", result, "label", "score");
       });
     }
 
