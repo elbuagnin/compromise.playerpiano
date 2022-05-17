@@ -25,7 +25,6 @@ export default function discern(doc, term, match) {
   }
 
   function isClassification(word, classification, match) {
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@ " + typeof word);
     function testing(tests, match) {
       function findChunk(scope) {
         if (scope === "phrase") {
