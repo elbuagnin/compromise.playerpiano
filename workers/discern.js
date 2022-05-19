@@ -54,12 +54,16 @@ export default function discern(doc, term, match) {
       }
 
       function wordsInPattern(pattern) {
+        if (pattern.includes("+")) {
+          return doc.wordCount();
+        }
+
         let count = 0;
 
-        count -= pattern.split(/\(.+&&.+\)/).length - 1;
-        count -= pattern.split(/\|/).length - 1;
-        count += pattern.split(/[\w|-|_|#|\?|\+]+/).length - 1;
-        count += pattern.split(/\s\d+\s/).length - 1;
+        count -= pattern.split(/\(.+&&.+\)/).length - 1; // ( term && other )
+        count -= pattern.split(/\|/).length - 1; // ( term | term )
+        count += pattern.split(/[\w|-|_|#|\?|\+]+/).length - 1; // word
+        count += pattern.split(/\s\d+\s/).length - 1; // number
 
         if (count < 0) {
           count = 0;
@@ -77,7 +81,8 @@ export default function discern(doc, term, match) {
       );
 
       tests.forEach((test) => {
-        devLogger("details", "\n" + test.pattern, "label", "  ");
+        devLogger("details", "\n");
+        devLogger("details", test.pattern, "label", "  ");
 
         let chunk = findChunk(test.scope);
         let patternWord = "%word%";
@@ -101,27 +106,31 @@ export default function discern(doc, term, match) {
         }
 
         let length = 0;
+        let extraWords = "";
         let selection = "";
         let wholePattern = "";
 
         switch (patternType) {
           case 1:
             length = wordsInPattern(frontPattern) + 1;
+            extraWords = ".{0," + length + "}";
             wholePattern = [frontPattern, patternWord].join(" ");
-            selection = chunk.match(match).previous(length).union(match);
-
+            selection = chunk.match(match).growLeft(extraWords);
             break;
           case 2:
             length = wordsInPattern(backPattern) + 1;
+            extraWords = ".{0," + length + "}";
             wholePattern = [patternWord, backPattern].join(" ");
-            selection = chunk.match(match).union(match.next(length));
+            selection = chunk.match(match).growRight(extraWords);
             break;
           case 3:
             length = wordsInPattern(frontPattern) + 1;
-            selection = chunk.match(match).previous(length).union(match);
-            selection = selection.union(match);
+            extraWords = ".{0," + length + "}";
+            selection = chunk.match(match).growLeft(extraWords);
             length = wordsInPattern(backPattern) + 1;
-            selection = selection.union(chunk.match(match).next(length));
+            extraWords = "";
+            extraWords = ".{0," + length + "}";
+            selection = selection.growRight(extraWords);
 
             wholePattern = [frontPattern, patternWord, backPattern].join(" ");
 
@@ -132,9 +141,9 @@ export default function discern(doc, term, match) {
         if (typeof word === "object") {
           word = word.text();
         }
-        const selectionClone = nlp(selection.text());
         wholePattern = wholePattern.replace("%word%", word).trim();
-        const selectionMatch = selectionClone.match(wholePattern);
+        const selectionMatch = selection.match(wholePattern);
+
         if (selectionMatch.found) {
           result += score(test.type);
         }
