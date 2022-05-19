@@ -2,7 +2,7 @@
 
 ## Beta Release
 
-A sequencer to automate parsing text using the NLP module, Compromise.
+A sequencer to automate parsing text using the NLP module, [Compromise](https://github.com/spencermountain/compromise)
 
 The Player Pianos of old would mechanically pull through a perforated sheet
 to operate a piano and play a song. Compromise.playerpiano does the same. But
@@ -30,16 +30,20 @@ npm install elbuagnin/compromise.playerpiano
 ```
 
 #### Create a directory structure for the sequences (see [Wiki](https://github.com/elbuagnin/compromise.playerpiano/wiki)).
+
 ```
 [+] sequencing-data
  --- [+] classifiers
  --- [+] doc-processors
  --- [+] sub-sequences
 ```
+
 ##### etc.
 
 #### Create the instruction sequences (see [Wiki](https://github.com/elbuagnin/compromise.playerpiano/wiki)).
+
 ##### Example
+
 ```
 "Initial Document Pattern Tagging": {
     "order": "2",
@@ -58,8 +62,10 @@ npm install elbuagnin/compromise.playerpiano
     "source": "directory",
     "payload": { "directory": "compound-terms" }
   },
-  ```
+```
+
 ##### etc.
+
 #### Call it from your code
 
 ##### Example
