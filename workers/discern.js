@@ -72,7 +72,7 @@ export default function discern(doc, term, match) {
         return count;
       }
 
-      // isClassification main
+      // testing main
       devLogger(
         "workers",
         classification,
@@ -80,10 +80,10 @@ export default function discern(doc, term, match) {
         "Testing for Classification"
       );
 
-      tests.forEach((test) => {
-        devLogger("details", "\n");
-        devLogger("details", test.pattern, "label", "  ");
+      let singleTestResult = 0;
 
+      tests.forEach((test) => {
+        let result = 0;
         let chunk = findChunk(test.scope);
         let patternWord = "%word%";
 
@@ -116,12 +116,14 @@ export default function discern(doc, term, match) {
             extraWords = ".{0," + length + "}";
             wholePattern = [frontPattern, patternWord].join(" ");
             selection = chunk.match(match).growLeft(extraWords);
+            selection = selection.intersection(chunk);
             break;
           case 2:
             length = wordsInPattern(backPattern) + 1;
             extraWords = ".{0," + length + "}";
             wholePattern = [patternWord, backPattern].join(" ");
             selection = chunk.match(match).growRight(extraWords);
+            selection = selection.intersection(chunk);
             break;
           case 3:
             length = wordsInPattern(frontPattern) + 1;
@@ -131,7 +133,7 @@ export default function discern(doc, term, match) {
             extraWords = "";
             extraWords = ".{0," + length + "}";
             selection = selection.growRight(extraWords);
-
+            selection = selection.intersection(chunk);
             wholePattern = [frontPattern, patternWord, backPattern].join(" ");
 
             break;
@@ -145,25 +147,40 @@ export default function discern(doc, term, match) {
         const selectionMatch = selection.match(wholePattern);
 
         if (selectionMatch.found) {
-          result += score(test.type);
+          result = score(test.type);
+          singleTestResult += result;
         }
 
+        devLogger("details", "Single Test", "header");
+        const devSubHeader = "Is '" + word + "' a " + classification + "?";
+        devLogger("details", devSubHeader, "subheader");
+        devLogger("details", wholePattern, "label", "pattern");
+        devLogger("details", chunk, "label", "chunk");
+        devLogger("details", selection, "label", "selection");
         devLogger("details", result, "label", "score");
       });
+
+      return singleTestResult;
     }
 
-    let result = 0;
     const testTypes = ["negative", "improbable", "probable", "positive"];
     const testSet = classifyByPatternTests.filter(
       (test) => test.classification === classification
     );
 
+    let totalTestsResult = 0;
     testTypes.forEach((type) => {
       const tests = testSet.filter((test) => test.type === type);
-      testing(tests, match);
+      totalTestsResult += testing(tests, match);
     });
 
-    return result;
+    const devSummarySubHeader = "Is '" + word + "' a " + classification + "?";
+    devLogger("workers", "Classification Tests Summary", "header");
+    devLogger("workers", devSummarySubHeader, "subheader");
+    devLogger("workers", totalTestsResult, "label", "Total Test Result");
+    devLogger("workers", "".padStart(28, "~"));
+
+    return totalTestsResult;
   }
 
   function discernResults(results) {
@@ -220,7 +237,9 @@ export default function discern(doc, term, match) {
       return;
     } else {
       const discernedClassification = compromiseTagFormat(winner[0]);
-      devLogger("changes", match, "header", discernedClassification);
+      devLogger("changes", "Discerned Classicication", "header");
+      devLogger("changes", results, "label", "Results");
+      devLogger("changes", match, "label", discernedClassification);
 
       if (match.has(discernedClassification)) {
         match.tag("Resolved");
