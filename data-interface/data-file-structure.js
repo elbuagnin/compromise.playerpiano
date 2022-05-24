@@ -1,12 +1,15 @@
 import path from "path";
+import url from "url";
 import fs from "fs";
-
+import { dataPath } from "./data-path.js";
+console.log(dataPath);
+const parentHome = dataPath;
 const here = import.meta.url;
-const parentHome = process.cwd();
-const pathAdjustment = path.relative(here, parentHome);
-const parentImportPathHome = path.resolve(pathAdjustment);
+console.log(here);
+console.log(parentHome);
+let baseData = path.join(parentHome, "/sequencing-data/");
 
-const baseData = path.resolve(parentHome, "/sequencing-data/");
+console.log(baseData);
 const classifiers = path.join(baseData, "classifiers");
 const classifierKeys = path.join(classifiers, "classification-keys");
 const classifierByTerms = path.join(classifiers, "classifications-by-terms");

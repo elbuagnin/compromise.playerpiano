@@ -1,4 +1,5 @@
 import path from "path";
+import { fileURLToPath } from "url";
 import deasync from "deasync";
 import devLogger from "../lib/dev-logger.js";
 import * as dirs from "../data-interface/data-file-structure.js";
@@ -11,26 +12,32 @@ export default function process(doc, parsingData) {
   // in a fashion to wrap it synchronously.
   function runAsyncProcess(processPath, doc) {
     import(processPath)
-      .then((proc) => {
-        proc.default(doc);
-        done = true;
+      .then((processModule) => {
+        processModule.processor(doc);
+        finished = true;
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
   const { process } = parsingData;
-  const processPath = path.join(
-    dirs.parentHome,
-    dirs.processors,
-    process + ".js"
+  const processPath = path.join(dirs.processors, process + ".js");
+  const relativeProcessPath = path.relative(
+    fileURLToPath(import.meta.url),
+    processPath
   );
+  console.log(import.meta.url);
+  console.log(processPath);
+  console.log(relativeProcessPath);
 
   let before = docHelpers.surfaceCopy(doc); // for debugging output
 
-  const runProcess = deasync(runAsyncProcess(processPath, doc));
-  let done = false;
+  const runProcess = deasync(runAsyncProcess(relativeProcessPath, doc));
+  let finished = false;
   deasync.loopWhile(function () {
-    return !done;
+    console.log(finished);
+    return !finished;
   });
 
   const after = docHelpers.surfaceCopy(doc); // for debugging output
