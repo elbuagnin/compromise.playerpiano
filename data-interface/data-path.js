@@ -1,4 +1,4 @@
-export let dataPath = process.cwd();
+export let dataPath = false;
 
 export function setDataPath(path) {
   dataPath = path;
