@@ -3,41 +3,38 @@ import url from "url";
 import fs from "fs";
 import { dataPath } from "./data-path.js";
 
-console.log(dataPath);
 const parentHome = dataPath;
 const here = import.meta.url;
-console.log(here);
-console.log(parentHome);
-let baseData = path.join(parentHome, "/sequencing-data/");
-
-console.log(baseData);
+const baseData = path.join(parentHome, "/sequencing-data/");
 const classifiers = path.join(baseData, "classifiers");
-const classifierKeys = path.join(classifiers, "classification-keys");
-const classifierByTerms = path.join(classifiers, "classifications-by-terms");
-const classifierByClassifications = path.join(
-  classifiers,
-  "terms-by-classifications"
-);
-const classifierPatterns = path.join(classifiers, "classifier-patterns");
-const processors = path.join(baseData, "doc-processors");
-const subSequences = path.join(baseData, "sub-sequences");
-const tagPatterns = path.join(baseData, "tag-by-patterns");
-const initialization = path.join(baseData, "world-initialization");
-const tags = path.join(initialization, "tags");
-const words = path.join(initialization, "words");
 
-export {
-  parentHome,
-  baseData,
-  classifiers,
-  classifierKeys,
-  classifierByTerms,
-  classifierByClassifications,
-  classifierPatterns,
-  processors,
-  subSequences,
-  tagPatterns,
-  initialization,
-  tags,
-  words,
-};
+export function classifierKeys() {
+  return path.join(classifiers, "classification-keys");
+}
+export function classifierByTerms() {
+  return path.join(classifiers, "classifications-by-terms");
+}
+export function classifierByClassifications() {
+  return path.join(classifiers, "terms-by-classifications");
+}
+export function classifierPatterns() {
+  return path.join(classifiers, "classifier-patterns");
+}
+export function processors() {
+  return path.join(baseData, "doc-processors");
+}
+export function subSequences() {
+  return path.join(baseData, "sub-sequences");
+}
+export function tagPatterns() {
+  return path.join(baseData, "tag-by-patterns");
+}
+export function initialization() {
+  return path.join(baseData, "world-initialization");
+}
+export function tagsPath() {
+  return path.join(initialization, "tags");
+}
+export function wordsPath() {
+  return path.join(initialization, "words");
+}
