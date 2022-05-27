@@ -1,5 +1,5 @@
-export let dataPath = false;
+export let storedDataPath = false;
 
 export function setDataPath(path) {
-  dataPath = path;
+  storedDataPath = path;
 }

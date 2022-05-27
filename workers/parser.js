@@ -1,5 +1,5 @@
 import * as mfs from "../lib/filesystem.js";
-import * as dirs from "../data-interface/data-file-structure.js";
+import dataPaths from "../data-interface/data-file-structure.js";
 import path from "path";
 import discern from "./discern.js";
 import tagger from "./tagger.js";
@@ -8,11 +8,11 @@ import process from "./processor.js";
 function parsingDataPaths(parseBy) {
   switch (parseBy) {
     case "pattern":
-      return dirs.tagPatterns;
+      return dataPaths("tagPatternsPath");
     case "term":
-      return dirs.classifierByTerms;
+      return dataPaths("classifierByTermsPath");
     case "process":
-      return dirs.processors;
+      return dataPaths("processorsPath");
     default:
       break;
   }

@@ -1,20 +1,10 @@
 import path from "path";
 import * as mfs from "../lib/filesystem.js";
-import * as dirs from "../data-interface/data-file-structure.js";
-import { dataPath, setDataPath } from "../data-interface/data-path.js";
+import dataPaths from "../data-interface/data-file-structure.js";
 import devLogger from "../lib/dev-logger.js";
 import parse from "./parser.js";
 
-export default function sequencer(
-  document,
-  instructions,
-  callingDataPath = false
-) {
-  if (callingDataPath !== false) {
-    setDataPath(callingDataPath);
-  }
-
-  console.log("dataPath = " + dataPath);
+export default function sequencer(document, instructions) {
   function execute(instruction) {
     const { scope } = instruction;
 
@@ -43,7 +33,7 @@ export default function sequencer(
   }
 
   function subSequencer(file) {
-    const filepath = path.join(dataPath + "/sub-sequences/", file + ".json");
+    const filepath = path.join(dataPaths("subSequencesPath"), file + ".json");
 
     const returnType = "array";
     const subSequence = mfs.loadJSONFile(filepath, returnType);
@@ -67,10 +57,16 @@ export default function sequencer(
   instructions.forEach((instruction, key) => {
     devLogger("instructions", instruction, "title", "instruction");
 
-    if (instruction.action === "sub-sequence") {
-      subSequencer(instruction.payload.file);
-    } else {
-      execute(instruction);
+    if (instruction.baseDataPath) {
+      dataPaths("set", instruction.baseDataPath);
+    }
+
+    if (instruction.action) {
+      if (instruction.action === "sub-sequence") {
+        subSequencer(instruction.payload.file);
+      } else {
+        execute(instruction);
+      }
     }
 
     devLogger("changes", document, "label", "post-instruction");

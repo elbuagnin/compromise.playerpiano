@@ -2,7 +2,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import deasync from "deasync";
 import devLogger from "../lib/dev-logger.js";
-import * as dirs from "../data-interface/data-file-structure.js";
+import dataPaths from "../data-interface/data-file-structure.js";
 import * as docHelpers from "../lib/doc-helpers.js";
 
 // Run custom imported functions from calling module.
@@ -22,7 +22,7 @@ export default function process(doc, parsingData) {
   }
 
   const { process } = parsingData;
-  const processPath = path.join(dirs.processors, process + ".js");
+  const processPath = path.join(dataPaths("processorsPath"), process + ".js");
   const relativeProcessPath = path.relative(
     fileURLToPath(import.meta.url),
     processPath

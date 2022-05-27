@@ -1,14 +1,20 @@
 import nlp from "compromise";
+import { setOptions } from "./config.js";
 // import initialize from "./initialize.js";
 import sequencer from "./workers/sequencer.js";
 
+function setPlayerPianoOptions(options = false) {
+  if (options) {
+    setOptions(options);
+  }
+}
+
 const playerpiano = {
   api: (View) => {
-    View.prototype.sequence = function (instructions, callingDataPath = false) {
-      console.log("this was passed along: " + callingDataPath);
-      sequencer(this, instructions, callingDataPath);
+    View.prototype.sequence = function (instructions) {
+      sequencer(this, instructions);
     };
   },
 };
 
-export default playerpiano;
+export { playerpiano, setPlayerPianoOptions };
