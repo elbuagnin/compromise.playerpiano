@@ -1,44 +1,20 @@
-import path from "path";
-import { fileURLToPath } from "url";
-import deasync from "deasync";
 import devLogger from "../lib/dev-logger.js";
-import dataPaths from "../data-interface/data-file-structure.js";
 import * as docHelpers from "../lib/doc-helpers.js";
+import calledProcess from "../data-interface/load-process.js";
 
 // Run custom imported functions from calling module.
 export default function process(doc, parsingData) {
-  // Import dynamically calling module's custom functions
-  // import() is asynchronous, so we will have to call it
-  // in a fashion to wrap it synchronously.
-  function runAsyncProcess(processPath, doc) {
-    import(processPath)
-      .then((processModule) => {
-        processModule.processor(doc);
-        finished = true;
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
-  }
-
   const { process } = parsingData;
-  const processPath = path.join(dataPaths("processorsPath"), process + ".js");
-  const relativeProcessPath = path.relative(
-    fileURLToPath(import.meta.url),
-    processPath
-  );
-  console.log(import.meta.url);
-  console.log(processPath);
-  console.log(relativeProcessPath);
+  console.log("Process: " + process);
 
   let before = docHelpers.surfaceCopy(doc); // for debugging output
 
-  const runProcess = deasync(runAsyncProcess(relativeProcessPath, doc));
-  let finished = false;
-  deasync.loopWhile(function () {
-    console.log(finished);
-    return !finished;
-  });
+  const fn = calledProcess(process);
+
+  let procFn = new Function(fn.arguments, fn.body);
+  console.log("Running function: " + fn.name);
+
+  procFn(doc);
 
   const after = docHelpers.surfaceCopy(doc); // for debugging output
 
