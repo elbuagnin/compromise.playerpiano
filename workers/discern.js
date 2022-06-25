@@ -13,7 +13,7 @@ export default function discern(doc, term, match) {
     const oldTags = Object.values(docWord.out("tags")[0])[0];
 
     const filteredTags = oldTags.filter((tag) => {
-      if (!tagExceptions.includes(tag)) {
+      if (!tagExceptions().includes(tag)) {
         return tag;
       }
     });
@@ -164,7 +164,8 @@ export default function discern(doc, term, match) {
     }
 
     const testTypes = ["negative", "improbable", "probable", "positive"];
-    const testSet = classifyByPatternTests.filter(
+    console.log(classifyByPatternTests());
+    const testSet = classifyByPatternTests().filter(
       (test) => test.classification === classification
     );
 

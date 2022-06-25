@@ -1,39 +1,120 @@
 import path from "path";
+import url from "url";
 import fs from "fs";
+import * as dp from "./data-path.js";
 
-const here = import.meta.url;
-const parentHome = process.cwd();
-const pathAdjustment = path.relative(here, parentHome);
-const parentImportPathHome = path.resolve(pathAdjustment);
+export default function dataPaths(arg, providedPath = false) {
+  let baseDataPath = false;
+  let classifiersPath = false;
+  let initializationPath = false;
 
-const baseData = path.resolve(parentHome, "/sequencing-data/");
-const classifiers = path.join(baseData, "classifiers");
-const classifierKeys = path.join(classifiers, "classification-keys");
-const classifierByTerms = path.join(classifiers, "classifications-by-terms");
-const classifierByClassifications = path.join(
-  classifiers,
-  "terms-by-classifications"
-);
-const classifierPatterns = path.join(classifiers, "classifier-patterns");
-const processors = path.join(baseData, "doc-processors");
-const subSequences = path.join(baseData, "sub-sequences");
-const tagPatterns = path.join(baseData, "tag-by-patterns");
-const initialization = path.join(baseData, "world-initialization");
-const tags = path.join(initialization, "tags");
-const words = path.join(initialization, "words");
+  if (dp.storedDataPath !== false) {
+    baseDataPath = dp.storedDataPath;
+  }
 
-export {
-  parentHome,
-  baseData,
-  classifiers,
-  classifierKeys,
-  classifierByTerms,
-  classifierByClassifications,
-  classifierPatterns,
-  processors,
-  subSequences,
-  tagPatterns,
-  initialization,
-  tags,
-  words,
-};
+  if (baseDataPath !== false) {
+    classifiersPath = path.join(baseDataPath, "classifiers");
+    initializationPath = path.join(baseDataPath, "initialization");
+  }
+
+  switch (arg) {
+    case "set":
+      if (providedPath !== false) {
+        dp.setDataPath(providedPath);
+      } else {
+        throw new Error("No data path provided by caller.");
+      }
+      break;
+
+    case "classifiersPath":
+      if (classifiersPath !== false) {
+        return classifiersPath;
+      } else {
+        throw new Error("Path classifiersPath is not set.");
+      }
+      break;
+
+    case "classifierKeysPath":
+      if (classifiersPath !== false) {
+        return path.join(classifiersPath, "classification-keys");
+      } else {
+        throw new Error("Path classifiersPath is not set.");
+      }
+      break;
+
+    case "classifierByTermsPath":
+      if (classifiersPath !== false) {
+        return path.join(classifiersPath, "classifications-by-terms");
+      } else {
+        throw new Error("Path classifierByTermsPath is not set.");
+      }
+      break;
+
+    case "classifierByClassificationsPath":
+      if (classifiersPath !== false) {
+        return path.join(classifiersPath, "terms-by-classifications");
+      } else {
+        throw new Error("Path classifierByClassificationsPath is not set.");
+      }
+      break;
+
+    case "classifierPatternsPath":
+      if (classifiersPath !== false) {
+        return path.join(classifiersPath, "classifier-patterns");
+      } else {
+        throw new Error("Path classifierPatternsPath is not set.");
+      }
+      break;
+
+    case "processorsPath":
+      if (baseDataPath !== false) {
+        return path.join(baseDataPath, "doc-processors");
+      } else {
+        throw new Error("Path processorsPath is not set.");
+      }
+      break;
+
+    case "subSequencesPath":
+      if (baseDataPath !== false) {
+        return path.join(baseDataPath, "sub-sequences");
+      } else {
+        throw new Error("Path subSequencesPath is not set.");
+      }
+      break;
+
+    case "tagPatternsPath":
+      if (baseDataPath !== false) {
+        return path.join(baseDataPath, "tag-by-patterns");
+      } else {
+        throw new Error("Path tagPatternsPath is not set.");
+      }
+      break;
+
+    case "initializationPath":
+      if (baseDataPath !== false) {
+        return path.join(baseDataPath, "initialization");
+      } else {
+        throw new Error("Path initializationPath is not set.");
+      }
+      break;
+
+    case "tagsPath":
+      if (initializationPath !== false) {
+        return path.join(initializationPath, "tags");
+      } else {
+        throw new Error("Path tagsPath is not set.");
+      }
+      break;
+
+    case "wordsPath":
+      if (initializationPath !== false) {
+        return path.join(initializationPath, "words");
+      } else {
+        throw new Error("Path wordsPath is not set.");
+      }
+      break;
+
+    default:
+      throw new Error("Expecting new datapath or datapath request.");
+  }
+}

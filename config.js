@@ -1,7 +1,7 @@
 export let pianoOptions = { verbose: "none" };
 
 export function setOptions() {
-  const optionList = arguments[0][0];
+  const optionList = arguments[0];
 
   if (typeof optionList === "string") {
     let args = optionList.split(" ");
