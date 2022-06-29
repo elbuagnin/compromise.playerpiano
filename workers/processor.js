@@ -5,14 +5,18 @@ import calledProcess from "../data-interface/load-process.js";
 // Run custom imported functions from calling module.
 export default function process(doc, parsingData) {
   const { process } = parsingData;
-  console.log("Process: " + process);
 
   let before = docHelpers.surfaceCopy(doc); // for debugging output
 
   const fn = calledProcess(process);
 
   let procFn = new Function(fn.arguments, fn.body);
-  console.log("Running function: " + fn.name);
+  devLogger(
+    "instructions",
+    fn.name,
+    "header",
+    "Running Processor Function: " + fn.name
+  );
 
   procFn(doc);
 
