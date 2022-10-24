@@ -1,14 +1,20 @@
-import initialize from "./initialize.js";
-import sequencer from "./sequencer.js";
+import nlp from "compromise";
+import { setOptions } from "./config.js";
+// import initialize from "./initialize.js";
+import sequencer from "./workers/sequencer.js";
 
-const pianoplayer = {
-  api: View => {
-    View.prototype.sequence = function() {
-      initialize(this);
-      sequencer(this);
-      return this;
-    };
+function setPlayerPianoOptions(options = false) {
+  if (options) {
+    setOptions(options);
   }
+}
+
+const playerpiano = {
+  api: (View) => {
+    View.prototype.sequence = function (instructions) {
+      sequencer(this, instructions);
+    };
+  },
 };
 
-export default pianoplayer;
+export { playerpiano, setPlayerPianoOptions };
