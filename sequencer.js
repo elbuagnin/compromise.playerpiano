@@ -58,8 +58,15 @@ export default function sequencer(document) {
   sequence.forEach(instruction => {
     if (instruction.action === "sub-sequence") {
       subSequencer(instruction.payload.file);
+
+      console.log(JSON.stringify(instruction));
+      doc.debug();
+      
     } else {
       execute(instruction);
+
+      console.log(JSON.stringify(instruction));
+      doc.debug();
     }
   });
   // console\.log.*

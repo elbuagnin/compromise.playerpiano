@@ -61,14 +61,14 @@ export default function process(doc, parsingData) {
   }
 
   const { process } = parsingData;
-  console.log(process);
+  // console.log(process);
   const processPath = path.join(
     dirs.parentBase,
     dirs.processors,
     process + ".js"
   );
 
-  const before = doc.clone(); // for debugging output
+  // const before = doc.clone(); // for debugging output
 
   const runProcess = deasync(runAsyncProcess(processPath, doc));
   let done = false;
@@ -77,17 +77,17 @@ export default function process(doc, parsingData) {
     return !done;
   });
 
-  const after = doc.clone(); // for debugging output
-
-  console.log("Before:");
-  before.debug();
-  console.log("After:");
-  after.debug();
-
-  console.log(equivalentDocs(before, after));
-  // Send debugging output if there is a change in the doc.
-  if (equivalentDocs(before, after) === false) {
-    console.log("Processed:");
-    doc.debug();
-  }
+  // const after = doc.clone(); // for debugging output
+  //
+  // console.log("Before:");
+  // before.debug();
+  // console.log("After:");
+  // after.debug();
+  //
+  // console.log(equivalentDocs(before, after));
+  // // Send debugging output if there is a change in the doc.
+  // if (equivalentDocs(before, after) === false) {
+  //   console.log("Processed:");
+  //   doc.debug();
+  // }
 }
