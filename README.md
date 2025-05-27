@@ -1,6 +1,6 @@
 # compromise.playerpiano
 
-## Beta Release
+## Discontinued & Archived. It was a fun project but is no longer applicable.
 
 A sequencer to automate parsing text using the NLP module, [Compromise](https://github.com/spencermountain/compromise)
 
